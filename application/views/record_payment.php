@@ -21,11 +21,14 @@
     <!-- Datepicker --->
     <link href="assets/css/plugins/datapicker/datepicker3.css" rel="stylesheet">
 
+
+
+
     <!-- Data Tables -->
     <link href="assets/css/plugins/dataTables/dataTables.bootstrap.css" rel="stylesheet">
     <link href="assets/css/plugins/dataTables/dataTables.responsive.css" rel="stylesheet">
     <link href="assets/css/plugins/dataTables/dataTables.tableTools.min.css" rel="stylesheet">
-
+    <link href="assets/js/plugins/notify/pnotify.core.css" rel="stylesheet">
 
 
 
@@ -115,17 +118,7 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <?php for($i=0;$i<=55;$i++){ ?>
-                                        <tr>
-                                            <td><input type="checkbox"></td>
-                                            <td>01/24/2016</td>
-                                            <td>10222111</td>
-                                            <td>ACC1023211</td>
-                                            <td>Paul Christian Bontia Rueda</td>
-                                            <td>Due @ 01/24/2016</td>
-											<td>3,300</td>
-                                        </tr>
-                                    <?php } ?>
+
                                     </tbody>
                                 </table>
                                 </div>
@@ -183,7 +176,7 @@
 
 
                                                                 <?php foreach($consumers as $consumer){  ?>
-                                                                    <option><?php echo "[ ".$consumer->account_no." ] ".$consumer->consumer; ?></option>
+                                                                    <option value="<?php echo $consumer->bill_account_id; ?>" data-consumer-id="<?php echo $consumer->consumer_id; ?>"><?php echo "[ ".$consumer->account_no." ] ".$consumer->consumer; ?></option>
                                                                 <?php } ?>
 
 
@@ -223,19 +216,14 @@
 																					</tr>
 																				</thead>
 																				<tbody>
-                                                                                    <tr>
-                                                                                        <td align="center"><i style="color:green;" class="fa fa-check"></i></td>
-                                                                                        <td>Jan 29, 2016</td>
-                                                                                        <td align="right" contenteditable="true">1,500.00</td>
-                                                                                        <td contenteditable="true">1000121</td>
-                                                                                        <td contenteditable="true">02/01/2016</td>
-                                                                                        <td align="right"  contenteditable="true">1,400.00</td>
-                                                                                        <td align="center"><button class="btn btn-success">Pay</button><span> </span><button class="btn btn-warning">Clear</button></td>
-                                                                                    </tr>
+
 																				</tbody>
 																				
 																				<tfoot>
-
+                                                                                    <tr>
+                                                                                        <td colspan="5" align="right"><h3>Total</h3></td>
+                                                                                        <td><h3>0.00</h3></td>
+                                                                                    </tr>
 
 																				</tfoot>
 											</table>
@@ -254,7 +242,7 @@
                 </div><!--/modal body-->
 
                 <div class="modal-footer">
-                    <button id="btn_create_app_account" type="button" class="btn btn-primary"><i class="fa fa-save"></i> <u>S</u>ave this Record </button>
+                    <button id="btn_save_record" type="button" class="btn btn-primary"><i class="fa fa-save"></i> <u>S</u>ave this Record </button>
                     <button type="button" class="btn btn-white" data-dismiss="modal"><u>C</u>lose</button>
                 </div>
             </div>
@@ -301,6 +289,11 @@
 <script src="assets/js/plugins/peity/jquery.peity.min.js"></script>
 <!-- date -->
 <script src="assets/js/plugins/date/date.js"></script>
+
+<!-- PNotify -->
+<script type="text/javascript" src="assets/js/plugins/notify/pnotify.core.js"></script>
+<script type="text/javascript" src="assets/js/plugins/notify/pnotify.buttons.js"></script>
+<script type="text/javascript" src="assets/js/plugins/notify/pnotify.nonblock.js"></script>
 
 <script src="assets/js/plugins/formatter/accounting.js"></script>
 

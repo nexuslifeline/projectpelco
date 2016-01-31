@@ -82,7 +82,9 @@ class ApprehendedConsumerModel extends CI_Model {
     function ReturnConsumerActiveList(){
         $rows=array();
         $sql="SELECT
+                    a.bill_account_id,
 					a.account_no,
+					b.consumer_id,
                     b.consumer_name as consumer
                 FROM
 					bill_account_info as a
@@ -113,6 +115,8 @@ class ApprehendedConsumerModel extends CI_Model {
 
         return $rows;
     }
+
+
 
     function ReturnAccountCartItems($id){
         /***
