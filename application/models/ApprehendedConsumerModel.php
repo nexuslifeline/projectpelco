@@ -82,6 +82,7 @@ class ApprehendedConsumerModel extends CI_Model {
     function ReturnConsumerActiveList(){
         $rows=array();
         $sql="SELECT
+                    a.bill_account_id,
 					a.account_no,
                     b.consumer_name as consumer
                 FROM
