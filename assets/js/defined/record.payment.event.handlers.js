@@ -1,5 +1,5 @@
-var tbl_item_schedule; //instance of datatable
 
+var tbl_item_schedule;
 var oSchedTable={
             "body"          :       "#tbl_item_schedule > tbody",
             "icon"          :       "td:eq(0)",
@@ -11,6 +11,7 @@ var oSchedTable={
             "action"        :       "td:eq(6)"
 
 };
+
 
 
 var tbl_payment_list;
@@ -26,6 +27,7 @@ var oPaymentList={
     "amount_paid"      :       "td:eq(6)"
 
 };
+
 
 
 
@@ -142,6 +144,7 @@ $(document).ready(function(){
      * item schedule list on modal
      */
     var dtItemScheduleList=(function(){
+
         var iconInvalid="<i class='fa fa-exclamation-triangle' style='color: #ff0000;padding-right:10px;'></i>";
 
         var bindEventHandlers=(function(){
@@ -294,6 +297,7 @@ $(document).ready(function(){
                 },
                 "rowCallback":function( row, data, index ){
 
+
                     $([oSchedTable.due_amount,oSchedTable.pay_amount].join(),row).attr({
                         "align":"right"
                     });
@@ -321,18 +325,22 @@ $(document).ready(function(){
 
     $('#cbo_consumer').change(function(){
         $('#tbl_item_schedule tbody').html('<tr><td colspan="7" align="center"><img src="assets/img/ajax-loader-sm.gif" /></td></tr>');
+
         var consumer_id=$(this).val();
 
         $.getJSON('RecordPaymentController/ActionShowScheduleBalances',{id:consumer_id}, function(response){
+
             //console.log(response);
             tbl_item_schedule.clear().draw();
 
             $.each(response,function(index,data){
                //alert(data.item_id)
                 tbl_item_schedule.row.add([
+
                     data.item_id,
                     data.sched_payment_date,
                     accounting.formatNumber(data.Remaining,2),
+
                     "",
                     "",
                     "",

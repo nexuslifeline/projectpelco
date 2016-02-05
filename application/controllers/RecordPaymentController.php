@@ -18,10 +18,13 @@ class RecordPaymentController extends CI_Controller {
 
     function ActionShowScheduleBalances(){
         echo json_encode(
+
             $this->RecordPaymentModel->ShowScheduleBalances($this->input->get('id'))
+
         );
 
     }
+
 
 
     function ActionShowPaymentList(){
@@ -44,6 +47,7 @@ class RecordPaymentController extends CI_Controller {
     function ShowLastPaidList(){
         echo json_encode($this->RecordPaymentModel->ShowLastPaidList());
     }
+
 
 
 

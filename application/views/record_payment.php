@@ -176,7 +176,9 @@
 
 
                                                                 <?php foreach($consumers as $consumer){  ?>
+
                                                                     <option value="<?php echo $consumer->bill_account_id; ?>" data-consumer-id="<?php echo $consumer->consumer_id; ?>"><?php echo "[ ".$consumer->account_no." ] ".$consumer->consumer; ?></option>
+
                                                                 <?php } ?>
 
 

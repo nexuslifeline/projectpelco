@@ -21,6 +21,7 @@ class RecordPaymentModel extends CI_Model
     function ShowScheduleBalances($account_id){
         $rows=array();
 
+
         $sql="SELECT p.* FROM(SELECT o.*,(o.due_amount-o.PaidAmount)as Remaining
                 FROM
                 (SELECT n.*,IFNULL(m.payment_amount,0)as PaidAmount
@@ -43,6 +44,7 @@ class RecordPaymentModel extends CI_Model
 
                 ON n.bill_item_account_id=m.bill_item_account_id)as o)as p WHERE p.Remaining>0 ORDER BY p.item_id";
 
+
         $query = $this->db->query($sql);
         foreach ($query->result() as $row)
         {
@@ -53,6 +55,7 @@ class RecordPaymentModel extends CI_Model
 
 
     }
+
 
 
 
@@ -149,6 +152,7 @@ class RecordPaymentModel extends CI_Model
         }
         return $rows;
     }
+
 
 }
 
