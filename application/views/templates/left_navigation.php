@@ -37,6 +37,14 @@
                         <li><a href="ItemManagementController">Item Management</a></li>
                     </ul>
                 </li>
+
+                <li>
+                    <a href="#"><i class="fa fa-group"></i> <span class="nav-label">Masterfile</span><span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+                        <li><a href="RecordPaymentController">User Management</a></li>
+
+                    </ul>
+                </li>
             </ul>
 
         </div>
