@@ -77,6 +77,38 @@ class ApprehendedConsumerController extends CI_Controller {
     }
 
 
+    function ActionGetConsumerLedger(){
+        $id=$this->input->get('id');
+        echo json_encode(
+            $this->ApprehendedConsumerModel->GetConsumerLedger($id)
+        );
+    }
+
+
+    function ActionPreviewConsumerLedger(){
+        //load mPDF library
+        $id=$this->input->get('accid'); //bill account id
+        $dl=0;
+        $pdfFilePath = "LEDGER.pdf"; //generate filename base on id
+
+        $this->load->library('m_pdf');
+        $pdf = $this->m_pdf->load(); //pass the instance of the mpdf class
+
+        $data['ledger']=$this->ApprehendedConsumerModel->GetConsumerLedger($id); //return array of consumer ledger
+        $data['consumer']=$this->ApprehendedConsumerModel->ReturnApprehendedConsumerList($id); //return array of consumer info
+
+        $content=$this->load->view('reports/rpt_consumer_ledger',$data,TRUE); //load our template
+        $pdf->setFooter('{PAGENO}');
+        $pdf->WriteHTML($content);
+
+        if($dl){
+            //download it.
+            $pdf->Output($pdfFilePath,"D");
+        }else{
+            //just output it on browser
+            $pdf->Output();
+        }
+    }
 
 
 }

@@ -77,10 +77,19 @@ class RecordPaymentModel extends CI_Model
             $receiptno=$this->input->post('receiptno');
             $description=$this->input->post('description');
             $itemid=$this->input->post('itemid');
+            $dueamount=$this->input->post('dueamount');
 
 
             $datas = array();
             for($i=0;$i<=count($receiptno)-1;$i++){
+
+                if($dueamount[$i]==$payment[$i]){
+                    $this->db->set('is_paid', '1', FALSE);
+                    $this->db->where('bill_account_id='.$accountid.' AND item_id='.$itemid[$i]);
+                    $this->db->update('bill_payment_schedule') or die(json_encode($this->error));
+                }
+
+
                 $datas[]=array(
                     'payment_id'=>$paymentid,
                     'item_id'=>$itemid[$i],
@@ -88,7 +97,7 @@ class RecordPaymentModel extends CI_Model
                     'bill_item_account_id'=>$accountid.$itemid[$i],
                     'receipt_no'=>$receiptno[$i],
                     'item_description'=>'Billed @ '.$description[$i],
-                    'date_paid'=>'0000-00-00'
+                    'date_paid'=>date('Y-m-d',strtotime($txndate[$i]))
                 );
             }
             $this->db->insert_batch('payment_item_list', $datas);

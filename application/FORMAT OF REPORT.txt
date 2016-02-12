@@ -1,0 +1,1 @@
+name	no of delay	amount	no of payment 	balance
