@@ -1,7 +1,9 @@
+
 var tbl_payment_schedule_list; //Bos dens, nag global nako para mabilis.. hehe
 var tbl_customer_ledger;
 var selected_account_id;
 var tbl_apprehended_consumer_list;
+
 
 $(document).ready(function(){
     /**********************************************************************************************************************************************************/
@@ -200,7 +202,7 @@ $(document).ready(function(){
                         }
                     },//column 3,
 
-                  {//column 8
+                  {//column 7
 
                         'bSortable': false,
                         'targets': [8],
@@ -210,7 +212,7 @@ $(document).ready(function(){
 
                             return '<center>'+btn_edit+btn_trash+'</center>';
                         }
-                    }//column 8
+                    }//column 7
                 ],
                 "rowCallback":function( row, data, index ){
 

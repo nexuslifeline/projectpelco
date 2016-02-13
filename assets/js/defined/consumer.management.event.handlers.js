@@ -279,18 +279,9 @@ $(document).ready(function(){
                                 console.log(xhr);
                             });
 
-
-
-
             });
 
-
-
-
         })();
-
-
-
 
         //function that validates all required fields, returns true if all required fields are supplied
         var validateRequiredFields=function(){
