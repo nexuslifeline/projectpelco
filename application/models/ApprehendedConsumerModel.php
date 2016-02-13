@@ -17,7 +17,7 @@ class ApprehendedConsumerModel extends CI_Model {
     }
 
 
-    function ReturnApprehendedConsumerList(){
+    function ReturnApprehendedConsumerList($account_id=0){
         $rows=array();
         $sql="SELECT
 					CONCAT_WS('|',
@@ -45,13 +45,29 @@ class ApprehendedConsumerModel extends CI_Model {
 							a.consumer_id,
 							b.consumer_name
 					)as consumer,
+					CONCAT_WS(', ',b.house_no,
+						b.street_no,
+						b.barangay,
+						b.municipality,
+						b.province)as consumer_address,
+					b.consumer_name,
 					b.contact_no,
-                    a.total_back_bill_amount,
+                    a.total_back_bill_amount,o.TotalPayment,
+                    (a.total_back_bill_amount-IFNULL(o.TotalPayment,0)) as TotalBalance,
                     n.period
                                            FROM
 					bill_account_info as a
 				LEFT JOIN
 					customer_info as b ON a.consumer_id=b.consumer_id
+
+                LEFT JOIN
+
+                (
+                SELECT a.bill_account_id,SUM(b.payment_amount)as TotalPayment FROM payment_info as a
+                    INNER JOIN payment_item_list as b ON a.payment_id=b.payment_id
+                    WHERE b.is_active=1
+                    GROUP BY a.bill_account_id
+                )as o ON a.bill_account_id=o.bill_account_id
 
                 LEFT JOIN
 
@@ -67,7 +83,7 @@ class ApprehendedConsumerModel extends CI_Model {
 
 				WHERE
 					a.is_deleted=FALSE
-					";
+					".($account_id!=0?" AND a.bill_account_id=$account_id":"");
 
         $query = $this->db->query($sql);
         foreach ($query->result() as $row)
@@ -503,6 +519,43 @@ class ApprehendedConsumerModel extends CI_Model {
     }
 
 
+    function GetConsumerLedger($id){
+        $rows=array();
+        $sql="SET @vRunningBalance:=0.00;";
+        $this->db->query($sql);
+
+        $sql="SELECT
+              n.*,@vRunningBalance:=(@vRunningBalance+(n.Debit-n.Credit))as Balance,DATE_FORMAT(n.txnDate,'%M %d, %Y')as TransDate
+          FROM
+                (SELECT m.*
+                FROM
+                (SELECT b.bill_account_id,b.account_no,'' as receipt_no,
+                a.sched_payment_date as TxnDate,
+                CONCAT('Due @ ',DATE_FORMAT(a.sched_payment_date,'%M %d, %Y'))as Description,
+                a.due_amount as Debit,0 as Credit
+                FROM bill_payment_schedule as a
+                INNER JOIN bill_account_info as b ON
+                a.bill_account_id=b.bill_account_id WHERE b.is_active=1
+                AND b.is_deleted=0 AND b.bill_account_id=$id
+
+
+                UNION ALL
+
+
+                SELECT a.bill_account_id,'' as account_no,b.receipt_no,b.date_paid as TxnDate,
+                ('Payment')as Description,0 as Debit,b.payment_amount as Credit
+                FROM payment_info as a
+                INNER JOIN payment_item_list as b ON a.payment_id=b.payment_id
+                WHERE b.is_active=1 AND a.bill_account_id=$id)as m ORDER BY m.TxnDate ASC)as n";
+        $query = $this->db->query($sql);
+
+        foreach ($query->result() as $row) //this will return only 1 row
+        {
+            $rows[]=$row; //assign each row of query in array
+        }
+
+        return $rows;
+    }
 
 }
 

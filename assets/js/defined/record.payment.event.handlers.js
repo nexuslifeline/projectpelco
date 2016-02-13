@@ -15,7 +15,6 @@ var oSchedTable={
 
 
 var tbl_payment_list;
-
 var oPaymentList={
     "body"          :       "#tbl_payment_list > tbody",
     "status"          :       "td:eq(0)",
@@ -28,6 +27,8 @@ var oPaymentList={
 
 };
 
+
+var tbl_customer_ledger;
 
 
 
@@ -115,6 +116,7 @@ $(document).ready(function(){
 
 
     })();
+
 
 
 
@@ -463,8 +465,9 @@ $(document).ready(function(){
                     {"name"  :  "itemid[]"   ,"value"   :   data[getCellIndex(oSchedTable.icon)]   },
                     {"name"  :  "description[]"   ,"value"   :   data[getCellIndex(oSchedTable.due_date)]   },
                     {"name"  :  "payamount[]"   ,"value"   :   parseFloat(data[getCellIndex(oSchedTable.pay_amount)])   },
-                    {"name"  :  "txndate[]"   ,"value"      :      parseFloat(data[getCellIndex(oSchedTable.txn_date)])   },
-                    {"name"  :  "receiptno[]"   ,"value"   :      parseFloat(data[getCellIndex(oSchedTable.receipt_no)])   }
+                    {"name"  :  "txndate[]"   ,"value"      :     data[getCellIndex(oSchedTable.txn_date)]   },
+                    {"name"  :  "receiptno[]"   ,"value"   :      parseFloat(data[getCellIndex(oSchedTable.receipt_no)])   },
+                    {"name"  :  "dueamount[]"   ,"value"   :      parseFloat(data[getCellIndex(oSchedTable.due_amount)])   }
                 );
             }
 

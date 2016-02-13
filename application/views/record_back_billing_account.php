@@ -35,7 +35,8 @@
             float: left;
         }
 
-        .tools {
+
+        .tools,.print_ledger {
             float: left;
             margin-bottom:5px;
         }
@@ -91,14 +92,14 @@
                                 <li class="active"><a data-toggle="tab" href="#tab-1">Apprehended Account(s)</a></li>
                                 <li class=""><a data-toggle="tab" href="#tab-2">Account Info</a></li>
                                 <li class=""><a data-toggle="tab" href="#tab-3">Consumer Ledger</a></li>
-                                <li class=""><a data-toggle="tab" href="#tab-4">Aging of Receivable</a></li>
+                                <li class=""><a data-toggle="tab" href="#tab-4">Deliquent Consumer List</a></li>
                             </ul>
                         </div>
                     </div>
 
                     <div class="panel-body">
                         <div class="tab-content">
-
+                            <!--/tab 1-->
                             <div id="tab-1" class="tab-pane active">
                                 <div class=" table-responsive">
                                 <table id="tbl_apprehended_consumer_list" class="table table-bordered">
@@ -111,6 +112,7 @@
 										<td>Contact No</td>  
 										<td>Payable Period</td>
                                         <td style="text-align:right;">Amount</td>
+                                        <td style="text-align:right;">Total Balance</td>
                                         <td>Action</td>
                                     </tr>
                                     </thead>
@@ -119,8 +121,9 @@
                                     </tbody>
                                 </table>
                                 </div>
-                            </div>
+                            </div><!--/tab 1-->
 
+                            <!--/tab 2-->
                             <div id="tab-2" class="tab-pane">
                                 <div class="row">
                                     <div class="col-lg-12">
@@ -197,34 +200,60 @@
 
                                 </div>
 
+                            </div><!--/tab 2-->
+
+
+                            <div id="tab-3" class="tab-pane">
+                                <table id="tbl_customer_ledger" class="table table-bordered">
+                                    <thead>
+                                    <tr>
+                                        <td>Date</td>
+                                        <td>Account #</td>
+                                        <td>Receipt #</td>
+                                        <td>Description</td>
+                                        <td>Debit</td>
+                                        <td>Credit</td>
+                                        <td>Balance</td>
+                                    </tr>
+                                    </thead>
+
+                                    <tbody>
+
+                                    </tbody>
+
+
+                                </table>
+
                             </div>
-
-
-
 
 
 							<div id="tab-4" class="tab-pane">
 								<table id="tbl_receivables_aging" class="table table-bordered">
                                     <thead>
                                     <tr>
+                                        <td>Account #</td>
 										<td>Consumer</td>
-                                        <td style="text-align:right;">1 month</td>
-                                        <td style="text-align:right;">2 months</td>
-                                        <td style="text-align:right;">3 months</td>
-                                        <td style="text-align:right;">4 months</td>
-                                        <td style="text-align:right;">Over 4 months</td>
+                                        <td style="text-align:right;">Apprehended Amount</td>
+                                        <td style="text-align:right;">Total Paid</td>
+                                        <td style="text-align:right;">Total Balance</td>
+                                        <td style="text-align:right;"># of Payments Made</td>
+                                        <td style="text-align:right;"># of Month(s) Delayed</td>
+                                        <td style="text-align:right;">Previous Balance</td>
+
                                     </tr>
                                     </thead>
 
                                     <tbody>
                                     <?php for($i=0;$i<=10;$i++){ ?>
                                         <tr>
+                                            <td>AC12000</td>
 											<td>Paul Christian Rueda</td>
-                                            <td align="right">1,000.00</td>
-                                            <td align="right">0.00</td>
-                                            <td align="right">0.00</td>
-                                            <td align="right">0.00</td>
-                                            <td align="right">1,000.00</td>
+                                            <td align="right">22,600</td>
+                                            <td align="right">1,000</td>
+                                            <td align="right">21,600</td>
+                                            <td align="right">5</td>
+                                            <td align="right">3</td>
+                                            <td align="right">1,900.00</td>
                                         </tr>
                                     <?php } ?>
                                     </tbody>

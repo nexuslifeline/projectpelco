@@ -1,11 +1,13 @@
 var tbl_payment_schedule_list; //Bos dens, nag global nako para mabilis.. hehe
-
+var tbl_customer_ledger;
+var selected_account_id;
+var tbl_apprehended_consumer_list;
 
 $(document).ready(function(){
     /**********************************************************************************************************************************************************/
     //consumer apprehended list module and table
     var apprehendedConsumerModule=(function(){
-        var tbl_apprehended_consumer_list;
+
         var bindEventHandlers=(function(){
             /**
              *
@@ -72,8 +74,9 @@ $(document).ready(function(){
                 highlightRow(this);
 
                 var row=$(this);
-                showPaymentSchedule(row.find('td:eq(0) input[type="checkbox"]').val());
-
+                selected_account_id=row.find('td:eq(0) input[type="checkbox"]').val();
+                showPaymentSchedule(selected_account_id);
+                showConsumerLedger();
 
                 $('#cell_reference_no').text(
                     row.find('td').eq(1).text()
@@ -200,7 +203,7 @@ $(document).ready(function(){
                   {//column 8
 
                         'bSortable': false,
-                        'targets': [7],
+                        'targets': [8],
                         'render': function(data, type, full, meta){
                             var btn_edit='<button name="edit_account" class="btn btn-default btn-sm" style="margin-left:-15px;" data-toggle="tooltip" data-placement="top" title="Adjust Invoice"><i class="fa fa-file-text-o"></i> </button>';
                             var btn_trash='<button name="remove_account" class="btn btn-default btn-sm" style="margin-right:-15px;" data-toggle="tooltip" data-placement="top" title="Move to trash"><i class="fa fa-trash-o"></i> </button>';
@@ -211,7 +214,7 @@ $(document).ready(function(){
                 ],
                 "rowCallback":function( row, data, index ){
 
-                    $(row).find('td').eq(6).attr({
+                    $('td:eq(6),td:eq(7)',row).attr({
                         "align":"right"
                     });
 
@@ -227,7 +230,7 @@ $(document).ready(function(){
 
 
         var showApprehendedConsumerList=function(){
-            $('#tbl_apprehended_consumer_list tbody').html('<tr><td colspan="8" align="center"><img src="assets/img/ajax-loader-sm.gif"></td></tr>');
+            $('#tbl_apprehended_consumer_list tbody').html('<tr><td colspan="9" align="center"><img src="assets/img/ajax-loader-sm.gif"></td></tr>');
             $.getJSON('ApprehendedConsumerController/ActionGetApprehendedConsumerList', function(response){
                 tbl_apprehended_consumer_list.clear().draw(); //make sure apprehended consumer datatable has no rows
                 //console.log(response);
@@ -240,6 +243,7 @@ $(document).ready(function(){
                         value.contact_no,
                         value.period,
                         accounting.formatNumber(value.total_back_bill_amount,2),
+                        accounting.formatNumber(value.TotalBalance,2),
                         ""
                     ]).draw();
                 });
@@ -314,6 +318,32 @@ $(document).ready(function(){
             }
 
         });
+
+    })();
+
+
+    var dtCustomerLedger=(function(){
+
+        var initializeCustomerLedger=(function(){
+            tbl_customer_ledger=$('#tbl_customer_ledger').DataTable({
+                "bLengthChange": false,
+                "bPaginate":false,
+                "dom": '<"print_ledger">frtip',
+                "rowCallback":function( row, data, index ){
+                    $('td:eq(4),td:eq(5),td:eq(6)',row).attr({
+                        "align" :   "right"
+                    });
+
+                }
+            });
+        })();
+
+
+        var createPrintButton=(function(){
+            var _btnPrint='<a href="ApprehendedConsumerController/ActionPreviewConsumerLedger" target="_blank"><button class="btn btn-default btn-sm"  id="btn_print_ledger" data-placement="left" data-toggle="modal" title="Print Consumer Ledger" ><i class="fa fa-print"></i> Print Consumer Ledger</button></a>';
+            $("div.print_ledger").html(_btnPrint);
+        })();
+
 
     })();
 
@@ -1256,7 +1286,9 @@ $(document).ready(function(){
 
 
 
-
+    $(document).on('click','#btn_print_ledger',function(){
+        $(this).closest('a').attr('href',"ApprehendedConsumerController/ActionPreviewConsumerLedger?accid="+selected_account_id);
+    });
 
 
 
@@ -1291,6 +1323,31 @@ $(document).ready(function(){
         dtPaymentScheduleModule.removeRows();
 
     });
+
+
+
+    var showConsumerLedger=function(){
+        $('a[href="#tab-3"]').html(" <span> [ Loading details... <img src='assets/img/ajax-loader-arrow.gif'> ]</span>" );
+        $('#tbl_customer_ledger tbody').html('<tr><td colspan="8" align="center"><img src="assets/img/ajax-loader-sm.gif"></td></tr>');
+        $.getJSON('ApprehendedConsumerController/ActionGetConsumerLedger',{"id":selected_account_id}, function(response){
+            tbl_customer_ledger.clear().draw(); //make sure apprehended consumer datatable has no rows
+            //console.log(response);
+            $.each(response,function(index,value){
+                tbl_customer_ledger.row.add([
+                    value.TransDate,
+                    value.account_no,
+                    value.receipt_no,
+                    value.Description,
+                    accounting.formatNumber(value.Debit,2),
+                    accounting.formatNumber(value.Credit,2),
+                    accounting.formatNumber(value.Balance,2)
+                ]).draw();
+            });
+
+            var consumer=$('#tbl_apprehended_consumer_list > tbody tr.active').find('td:eq(3)').text();
+            $('a[href="#tab-3"]').html("<i class='fa fa-user text-navy'></i> Consumer Ledger [ <b><span class='text-navy'>"+consumer+"</span></b> ]");
+        });
+    };
 
 
     /************************************************************************************/
