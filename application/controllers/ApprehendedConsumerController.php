@@ -111,6 +111,12 @@ class ApprehendedConsumerController extends CI_Controller {
     }
 
 
+    function ActionGetDelinquentList(){
+        echo json_encode(
+            $this->ApprehendedConsumerModel->GetDelinquentList()
+        );
+    }
+
 }
 
 ?>

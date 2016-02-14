@@ -36,7 +36,7 @@
         }
 
 
-        .tools,.print_ledger {
+        .tools,.print_ledger,.print_deliquent {
             float: left;
             margin-bottom:5px;
         }
@@ -92,7 +92,7 @@
                                 <li class="active"><a data-toggle="tab" href="#tab-1">Apprehended Account(s)</a></li>
                                 <li class=""><a data-toggle="tab" href="#tab-2">Account Info</a></li>
                                 <li class=""><a data-toggle="tab" href="#tab-3">Consumer Ledger</a></li>
-                                <li class=""><a data-toggle="tab" href="#tab-4">Deliquent Consumer List</a></li>
+                                <li class=""><a data-toggle="tab" href="#tab-4">Delinquent Consumer List</a></li>
                             </ul>
                         </div>
                     </div>
@@ -228,7 +228,7 @@
 
 
 							<div id="tab-4" class="tab-pane">
-								<table id="tbl_receivables_aging" class="table table-bordered">
+								<table id="tbl_deliquent_list" class="table table-bordered">
                                     <thead>
                                     <tr>
                                         <td>Account #</td>
@@ -244,18 +244,7 @@
                                     </thead>
 
                                     <tbody>
-                                    <?php for($i=0;$i<=10;$i++){ ?>
-                                        <tr>
-                                            <td>AC12000</td>
-											<td>Paul Christian Rueda</td>
-                                            <td align="right">22,600</td>
-                                            <td align="right">1,000</td>
-                                            <td align="right">21,600</td>
-                                            <td align="right">5</td>
-                                            <td align="right">3</td>
-                                            <td align="right">1,900.00</td>
-                                        </tr>
-                                    <?php } ?>
+
                                     </tbody>
 
 

@@ -3,7 +3,7 @@ var tbl_payment_schedule_list; //Bos dens, nag global nako para mabilis.. hehe
 var tbl_customer_ledger;
 var selected_account_id;
 var tbl_apprehended_consumer_list;
-
+var tbl_deliquent_list;
 
 $(document).ready(function(){
     /**********************************************************************************************************************************************************/
@@ -300,6 +300,36 @@ $(document).ready(function(){
     })();
     /**********************************************************************************************************************************************************/
 
+    var dtDeliquentList=(function(){
+
+        var bindEventHandlers=function(){
+            $(document).on('click','#btn_refresh_deliquent',function(){
+                showDelinquentList();
+            });
+        }();
+
+        var initializeCustomerLedger=(function(){
+            tbl_deliquent_list=$('#tbl_deliquent_list').DataTable({
+                "bLengthChange": false,
+                "bPaginate":false,
+                "dom": '<"print_deliquent">frtip',
+                "rowCallback":function( row, data, index ){
+                    $('td:eq(2),td:eq(3),td:eq(4),td:eq(5),td:eq(6),td:eq(7)',row).attr({
+                        "align" :   "right"
+                    });
+
+                }
+            });
+        })();
+
+
+        var createPrintButton=(function(){
+            var _btnPrint='<a href="#" target="_blank"><button class="btn btn-default btn-sm"  id="btn_print_deliquent" data-placement="left" data-toggle="modal" title="Print Deliquent Consumer" ><i class="fa fa-print"></i> Print Delinquent Consumer</button></a>';
+            var _btnRefresh='<button class="btn btn-default btn-sm"  id="btn_refresh_deliquent" data-placement="left" data-toggle="modal" title="Print Deliquent Consumer" ><i class="fa fa-refresh"></i> Refresh</button>';
+            $("div.print_deliquent").html(_btnPrint+_btnRefresh);
+        })();
+
+    })();
 
     var dtAccountInfoSchedule=(function(){
         tbl_payment_schedule_list=$('#tbl_payment_schedule_list').DataTable({
@@ -1352,6 +1382,32 @@ $(document).ready(function(){
     };
 
 
+
+    var showDelinquentList=function(){
+
+        $('#tbl_deliquent_list tbody').html('<tr><td colspan="8" align="center"><img src="assets/img/ajax-loader-sm.gif"></td></tr>');
+
+        $.getJSON('ApprehendedConsumerController/ActionGetDelinquentList', function(response){
+            tbl_deliquent_list.clear().draw(); //make sure apprehended consumer datatable has no rows
+            //console.log(response);
+            $.each(response,function(index,value){
+                tbl_deliquent_list.row.add([
+                    value.account_no,
+                    value.consumer_name,
+                    accounting.formatNumber(value.ApprehendedAmount,2),
+                    accounting.formatNumber(value.TotalPayment,2),
+                    accounting.formatNumber(value.TotalBalance,2),
+                    accounting.formatNumber(value.PaymentsMade,0),
+                    accounting.formatNumber(value.DelayedMonths,0),
+                    accounting.formatNumber(value.PreviousBalance,2)
+                ]).draw();
+            });
+
+
+        });
+    };
+
+    showDelinquentList();
     /************************************************************************************/
 
 

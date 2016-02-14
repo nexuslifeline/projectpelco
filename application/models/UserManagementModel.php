@@ -143,9 +143,6 @@ class UserManagementModel extends CI_Model {
     }
 
 
-
-
-
     function ReturnLastAffectedRowDetails(){
         $rows=array();
         $sql="SELECT

@@ -500,6 +500,7 @@ class ApprehendedConsumerModel extends CI_Model {
     }
 
 
+
     function ShowCurrentAccountSchedule($id){
         $rows=array();
         $sql="SELECT
@@ -517,6 +518,7 @@ class ApprehendedConsumerModel extends CI_Model {
         return $rows;
 
     }
+
 
 
     function GetConsumerLedger($id){
@@ -556,6 +558,84 @@ class ApprehendedConsumerModel extends CI_Model {
 
         return $rows;
     }
+
+
+
+    function GetDelinquentList(){
+        $rows=array();
+                $sql="SELECT g.*
+        FROM
+        (SELECT cs.*,
+        IFNULL(cs.tp.TotalPayment,0)as TotalPayment,
+        (cs.ApprehendedAmount-IFNULL(tp.TotalPayment,0))as TotalBalance,
+        IFNULL(pm.PaymentsMade,0)as PaymentsMade,
+        IFNULL(del.DelayedMonths,0)as DelayedMonths,
+        (IFNULL(accum.AccumulatedBalance,0)-IFNULL(tp.TotalPayment,0))As PreviousBalance
+
+        FROM
+
+        (SELECT a.bill_account_id,a.account_no,b.consumer_name,
+        a.total_back_bill_amount as ApprehendedAmount
+        FROM bill_account_info as a
+        LEFT JOIN customer_info as b ON a.consumer_id=b.consumer_id
+        WHERE a.is_active=1 AND a.is_deleted=0)As cs
+
+
+        LEFT JOIN
+
+
+        (SELECT a.bill_account_id,SUM(b.payment_amount)as TotalPayment FROM payment_info as a
+        INNER JOIN payment_item_list as b ON a.payment_id=b.payment_id
+        GROUP BY a.bill_account_id)as tp
+
+        ON cs.bill_account_id=tp.bill_account_id
+
+
+        LEFT JOIN
+
+
+        (SELECT a.bill_account_id,COUNT(a.sched_payment_date)as DelayedMonths FROM bill_payment_schedule as a
+        WHERE a.is_paid=0 AND a.sched_payment_date<=NOW()
+        GROUP BY a.bill_account_id)as del
+
+
+        ON cs.bill_account_id=del.bill_account_id
+
+
+        LEFT JOIN
+
+
+        (SELECT a.bill_account_id,SUM(a.due_amount)As AccumulatedBalance FROM bill_payment_schedule as a
+        WHERE a.is_paid=0 AND a.sched_payment_date<=NOW()
+        GROUP BY a.bill_account_id)as accum
+
+        ON cs.bill_account_id=accum.bill_account_id
+
+
+
+        LEFT JOIN
+
+
+        (SELECT m.bill_account_id,COUNT(m.receipt_no)as PaymentsMade
+        FROM
+        (SELECT a.bill_account_id,b.receipt_no FROM payment_info as a
+        INNER JOIN payment_item_list as b ON a.payment_id=b.payment_id
+        WHERE b.is_active=1
+        GROUP BY a.bill_account_id,b.receipt_no)as m
+        GROUP BY m.bill_account_id)as pm
+
+
+        ON cs.bill_account_id=pm.bill_account_id)as g
+        WHERE g.DelayedMonths>0";
+
+        $query = $this->db->query($sql);
+        foreach ($query->result() as $row) //this will return only 1 row
+        {
+            $rows[]=$row; //assign each row of query in array
+        }
+        return $rows;
+    }
+
 
 }
 
