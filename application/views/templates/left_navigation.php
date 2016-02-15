@@ -3,7 +3,7 @@
             <ul class="nav" id="side-menu">
                 <li class="nav-header">
                     <div class="dropdown profile-element"> <span>
-                            <img alt="image" class="img-circle" src="assets/img/profile_small.jpg" />
+                            <img alt="image" class="img-circle" src="assets/img/anonymous.png" />
                              </span>
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                             <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold">Paul Christian Rueda</strong>

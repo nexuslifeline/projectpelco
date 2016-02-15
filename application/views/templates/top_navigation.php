@@ -45,7 +45,7 @@
 											<li class="divider"></li>
 											<li>
 												<div class="text-center link-block">
-													<a href="mailbox.html">
+													<a href="#">
 														<i class="fa fa-envelope"></i> <strong>Read All Messages</strong>
 													</a>
 												</div>
