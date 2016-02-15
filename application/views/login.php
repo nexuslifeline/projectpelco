@@ -60,7 +60,7 @@
 
 
         <div class="col-md-6">
-            <h3 class="font-bold">Apprehend Consumer  Billing and Collection System</h3>
+            <h3 class="font-bold">Apprehended Consumer  Billing and Collection System</h3>
             <img style="border-radius: 3px" src="assets/img/Pelco-Logo.png" class="img-responsive" alt="" />
 
             <p>
