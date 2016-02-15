@@ -180,7 +180,7 @@ $(document).ready(function(){
 
                 $('#cell_total_back_bill_amount').html('<h3>'+accounting.formatNumber(total,2)+'</h3>');
                 var account_no=$('#tbl_apprehended_consumer_list > tbody tr.active').find('td:eq(2)').text();
-                $('a[href="#tab-2"]').html("<i class='fa fa-user text-navy'></i> Account Info [ Account No : <b><span class='text-navy'>"+account_no+"</span></b> ]");
+                $('a[href="#tab-2"]').html("<i class='fa fa-user text-navy'></i> Account Info [ <b><span class='text-navy'>"+account_no+"</span></b> ]");
 
                 //$('a[href="#tab-2"]').html("Account Info");
 
@@ -491,9 +491,7 @@ $(document).ready(function(){
             $(oTable.footer).on('keypress',[oTFoot.amount,oTFoot.days,oTFoot.dp].join(), function(event){
                 if(event.keyCode==13){
                     $('#plu_typehead').focus();
-                    $('#txt_downpayment').val($(oTFoot.dp,oTable.footer).text());
                     reComputeDetails();
-
                     return false;
                 }else{
                     return isNumber(event,this);
@@ -501,7 +499,6 @@ $(document).ready(function(){
             });
 
             $([oTFoot.amount,oTFoot.days,oTFoot.dp].join(),oTable.footer).blur(function(){
-                $('#txt_downpayment').val($(oTFoot.dp,oTable.footer).text());
                 reComputeDetails();
             });
 
@@ -776,14 +773,18 @@ $(document).ready(function(){
             var _installment=_netAmount/_max;
 
             var _startDate=new Date(  $('#payment_start').val()  );
-            var _momentDate = moment(_startDate);
+            Date.today().set({
+                year: _startDate.getFullYear(),
+                month: _startDate.getMonth(),
+                day: _startDate.getDate()
+            });
 
             clear(); //clear rows of schedule table
 
             for(var i=0;i<=_max-1;i++){
                 addRow(
                     [
-                        _momentDate.add('months',i).format('MM/DD/YYYY'),
+                        Date.today().addMonths(i).toString("MM/dd/yyyy"),
                         accounting.formatNumber(_installment,2),
                         ""
                     ]
@@ -895,7 +896,6 @@ $(document).ready(function(){
                                     row.contact_no,
                                     row.period,
                                     accounting.formatNumber(row.total_back_bill_amount,2),
-                                    accounting.formatNumber(row.TotalBalance,2),
                                     ""];
                                 apprehendedConsumerModule.addRow(data); //add the info of recent invoice
                                 apprehendedConsumerModule.lastPage(); //go to last page
@@ -995,35 +995,6 @@ $(document).ready(function(){
                 }
             });
 
-            if($('input[name="receipt_no"]').val()!="" &&(parseFloat($('#txt_downpayment').val())==0 ||$('#txt_downpayment').val()=="")){
-
-                $('a[href="#tab-downpayment-info"]').click();
-
-                $('#txt_downpayment').focus();
-                PNotify.removeAll();
-                new PNotify({
-                    title: 'Missing!',
-                    text: 'Down Payment is required',
-                    type: 'error'
-                });
-                stat=0;
-                return false;
-            }
-            if(parseFloat($('#txt_downpayment').val())>0 && $('input[name="receipt_no"]').val()==""){
-
-                $('a[href="#tab-downpayment-info"]').click();
-
-                $('input[name="receipt_no"]').focus();
-                PNotify.removeAll();
-                new PNotify({
-                    title: 'Missing!',
-                    text: 'Receipt No #  is required',
-                    type: 'error'
-                });
-                stat=0;
-                return false;
-            }
-
             $('textarea[required]').each(function(){ //selectpicker does not support tooltip, just show notification
                 if($(this).val()==""){
                     PNotify.removeAll();
@@ -1039,8 +1010,6 @@ $(document).ready(function(){
             });
 
             var rowCount = dtItemCartModule.getItemCartInstance().rows()[0].length;
-            var paymentSched = dtPaymentScheduleModule.getPaymentScheduleInstance().rows()[0].length;
-
             if(rowCount==0){ //if not item in cart
                 PNotify.removeAll();
                 new PNotify({
@@ -1048,22 +1017,9 @@ $(document).ready(function(){
                     text: 'No item found. Please enter atleast one item.',
                     type: 'error'
                 });
+
                 stat=0;
             }
-
-            if(paymentSched==0){ //if not item in cart
-                $('a[href="#create_payment_schedule"]').click();
-
-                PNotify.removeAll();
-                new PNotify({
-                    title: 'Missing!',
-                    text: 'Please create the schedule of payment.',
-                    type: 'error'
-                });
-                stat=0;
-                $('#txt_duration').focus();
-            }
-
 
             return stat; //this will always be executed and return current state
         }; //end of validateRequiredFields
@@ -1412,13 +1368,6 @@ $(document).ready(function(){
         $(this).tooltip('destroy');
     });
 
-    $('#payment_start').change(function(){
-
-        dtPaymentScheduleModule.createSchedule();
-
-    })
-
-
 
     /**********************************************************************************************************************************************************/
 
@@ -1470,7 +1419,7 @@ $(document).ready(function(){
             });
 
             var consumer=$('#tbl_apprehended_consumer_list > tbody tr.active').find('td:eq(3)').text();
-            $('a[href="#tab-3"]').html("<i class='fa fa-user text-navy'></i> Consumer Ledger [ Name : <b><span class='text-navy'>"+consumer+"</span></b> ]");
+            $('a[href="#tab-3"]').html("<i class='fa fa-user text-navy'></i> Consumer Ledger [ <b><span class='text-navy'>"+consumer+"</span></b> ]");
         });
     };
 

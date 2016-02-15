@@ -71,7 +71,7 @@
         <div class="wrapper wrapper-content"><!-- /main content area -->
             <div class="row">
 
-                <div class="col-lg-8 animated fadeInRight">
+                <div class="col-lg-12 animated fadeInRight">
                     <div class="mail-box-header" style="margin-bottom:-25px;">
                         <h2 style="block:inline;"><i class="fa fa-users"></i> Item Management </h2>
 
@@ -83,8 +83,8 @@
                         <div class="panel-heading">
                             <div class="panel-options">
                                 <ul class="nav nav-tabs">
-                                    <li class="active"><a data-toggle="tab" href="#tab-1">List of Consumer</a></li>
-                                    <li class=""><a data-toggle="tab" href="#tab-2">Consumer History</a></li>
+                                    <li class="active"><a data-toggle="tab" href="#tab-1">List of Items </a></li>
+
                                 </ul>
                             </div>
                         </div>
@@ -111,33 +111,6 @@
                                     </table>
                                 </div>
 
-                                <div id="tab-2" class="tab-pane">
-                                    <table id="tbl_consumer_history" class="table table-bordered">
-                                        <thead>
-                                        <tr>
-                                            <td>Txn Date</td>
-                                            <td>Reference #</td>
-                                            <td>Receipt #</td>
-                                            <td>Amount Due</td>
-                                            <td>Amount Paid</td>
-                                            <td>Balance</td>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <?php for($i=0;$i<=10;$i++){ ?>
-                                            <tr>
-                                                <td>Nov 20, 2015</td>
-                                                <td>2015101000001</td>
-                                                <td>11000001</td>
-                                                <td>1,200.00</td>
-                                                <td>0.00</td>
-                                                <td>1,200.00</td>
-                                            </tr>
-                                        <?php } ?>
-                                        </tbody>
-                                    </table>
-                                </div>
-
 
                             </div>
                         </div>
@@ -145,74 +118,7 @@
 
                 </div>
 
-                <div class="col-lg-4">
-                    <div class="contact-box  animated fadeInRight">
-                        <a href="#">
-                            <div class="col-sm-4">
-                                <div class="text-center">
-                                    <img alt="image" class="img-circle m-t-xs img-responsive" src="assets/img/profile_small.jpg">
-                                    <div class="m-t-xs font-bold">Software Developer</div>
-                                </div>
-                            </div>
-                            <div class="col-sm-8">
-                                <h3><strong>Christian Rueda</strong></h3>
-                                <p><i class="fa fa-archive"></i> JDEV IT Business Solution</p><br>
 
-                                <address>
-                                    <i class="fa fa-map-marker"></i> San Jose, San Simon, Pampanga<br>
-                                    <i class="fa fa-map-marker"></i> chrisrueda14@yahoo.com<br>
-                                    <i class="fa fa-list-alt"></i> 322-3542<br>
-                                </address>
-                            </div>
-
-                            <div class="text-right">
-                                <a class="btn btn-xs btn-white"><i class="fa fa-pencil"></i> Edit Customer Info </a>
-                                <a id="btn-post-payment" class="btn btn-xs btn-white"><i class="fa fa-credit-card"></i> Post Payment </a>
-                            </div>
-
-
-                        </a>
-                    </div>
-
-                </div>
-
-                <div class="col-lg-4">
-                    <div class="contact-box  animated fadeInRight" style="padding:10px;">
-
-                        <div class="panel-heading">
-                            <div class="panel-options">
-                                <ul class="nav nav-tabs">
-                                    <li class="active"><a data-toggle="tab" href="#tab-invoice-1">Account Receivable</a></li>
-
-                                </ul>
-                            </div>
-                        </div>
-
-                        <div class="panel-body">
-                            <div class="tab-content">
-                                <div id="tab-invoice-1" class="tab-pane active">
-                                    <div class="row">
-                                        <div class="col-xs-12">
-                                            <span>Current Receivable</span>
-                                            <h2>$ 1,231,809.00</h2>
-                                            <div class="text-center m">
-                                                <span id="sparkline8"></span>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <br />
-
-                                </div>
-
-
-                            </div>
-                        </div>
-
-
-
-                    </div>
-                </div>
             </div>
         </div><!-- /main content area -->
 
@@ -258,17 +164,17 @@
                                             <div class="col-lg-6">
                                                 <div class="form-group">
                                                     <label>Unit Description *</label>
-                                                    <input class="form-control" type="text" name="unit_description" placeholder="Unit Description"  data-container="body" data-trigger="manual" data-toggle="tooltip" title="Employee number is required.">
+                                                    <input class="form-control" type="text" name="unit_description" placeholder="Unit Description"  data-container="body" data-trigger="manual" data-toggle="tooltip" title="Unit Description is required." data-message="Please make sure you enter Unit Description." required>
                                                 </div>
 
                                                 <div class="form-group">
                                                     <label>Brand Name</label>
-                                                    <input class="form-control" type="text" name="brand_name" placeholder="Brand Name"  data-container="body" data-trigger="manual" data-toggle="tooltip" title="Employee number is required.">
+                                                    <input class="form-control" type="text" name="brand_name" placeholder="Brand Name"  data-container="body" data-trigger="manual" data-toggle="tooltip" title="Brand Name is required." data-message="Please make sure you enter Brand Name." required>
                                                 </div>
 
                                                 <div class="form-group">
                                                     <label>Model Name *</label>
-                                                    <input class="form-control" type="text" name="model_name" placeholder="Barangay"  data-container="body" data-trigger="manual" data-toggle="tooltip" title="Employee number is required.">
+                                                    <input class="form-control" type="text" name="model_name" placeholder="Model Name"  data-container="body" data-trigger="manual" data-toggle="tooltip" title="Model Name is required." data-message="Please make sure you enter Model Name." required>
                                                 </div>
                                             </div>
 
@@ -276,11 +182,11 @@
 
                                                 <div class="form-group">
                                                     <label>Estimated Kwh</label>
-                                                    <input class="form-control" type="text" name="estimated_kwh" placeholder="Estimated KHW"  data-container="body" data-trigger="manual" data-toggle="tooltip" title="Employee number is required.">
+                                                    <input class="form-control" type="text" name="estimated_kwh" placeholder="Estimated KHW"  data-container="body" data-trigger="manual" data-toggle="tooltip" title="Estimated KHW is required." data-message="Please make sure you enter Estimated KHW." required>
                                                 </div>
                                                 <div class="form-group">
                                                     <label>Amount Consumption </label>
-                                                    <input class="form-control" type="text" name="amount_consumption" placeholder="Amount Consumption"  data-container="body" data-trigger="manual" data-toggle="tooltip" title="Employee number is required.">
+                                                    <input class="form-control" type="text" name="amount_consumption" placeholder="Amount Consumption"  data-container="body" data-trigger="manual" data-toggle="tooltip" title="Amount Consumption is required."data-message="Please make sure you enter Amount Consumption." required >
                                                 </div>
                                             </div>
                                     </div>

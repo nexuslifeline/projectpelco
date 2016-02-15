@@ -143,9 +143,6 @@ class UserManagementModel extends CI_Model {
     }
 
 
-
-
-
     function ReturnLastAffectedRowDetails(){
         $rows=array();
         $sql="SELECT
@@ -164,7 +161,7 @@ class UserManagementModel extends CI_Model {
 
                 )AS     hidden,
 
-            CONCAT_WS('|',
+            CONCAT_WS(' ',
                       firstname,
                       middlename,
                       lastname

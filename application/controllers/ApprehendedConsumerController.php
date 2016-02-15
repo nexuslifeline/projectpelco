@@ -111,6 +111,54 @@ class ApprehendedConsumerController extends CI_Controller {
     }
 
 
+    function ActionPreviewDelinquent(){
+        //load mPDF library
+
+
+
+        $this->load->library('m_pdf');
+        $pdf = $this->m_pdf->load('A4-L'); //pass the instance of the mpdf class
+        $data['delinquent']=$this->ApprehendedConsumerModel->GetDelinquentList();
+
+        $content=$this->load->view('reports/rpt_delinquent',$data,TRUE); //load our template
+        $pdf->setFooter('{PAGENO}');
+        $pdf->WriteHTML($content);
+
+
+        //just output it on browser
+        $pdf->Output();
+
+    }
+
+
+    function ActionGetDelinquentList(){
+        echo json_encode(
+            $this->ApprehendedConsumerModel->GetDelinquentList()
+        );
+    }
+
+
+    function ActionPreviewSchedule(){
+        $id=$this->input->get('accid');
+
+        $data['list']=$this->ApprehendedConsumerModel-> ReturnPaymentScheduleItems($id);
+        $data['consumer']=$this->ApprehendedConsumerModel->ReturnApprehendedConsumerList($id); //return array of consumer info
+
+        $this->load->library('m_pdf');
+        $pdf = $this->m_pdf->load(); //pass the instance of the mpdf class
+
+        $content=$this->load->view('reports/rpt_schedule',$data,TRUE); //load our template
+        $pdf->setFooter('{PAGENO}');
+        $pdf->WriteHTML($content);
+
+
+        //just output it on browser
+        $pdf->Output();
+    }
+
+
+
+
 }
 
 ?>

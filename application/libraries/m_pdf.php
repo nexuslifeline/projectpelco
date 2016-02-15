@@ -7,16 +7,10 @@ class m_pdf {
         log_message('Debug', 'mPDF class is loaded.');
     }
  
-    function load($param=NULL)
+    function load($param="A4")
     {
         include_once APPPATH.'/third_party/mpdf/mpdf.php';
-         
-        if ($params == NULL)
-        {
-            $param = '"en-GB-x","A4","","",10,10,10,10,6,3';     
-	
-        }
-         
-        return new mPDF($param);
+
+        return new mPDF('c',$param);
     }
 }

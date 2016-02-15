@@ -27,6 +27,10 @@
     <link href="assets/css/plugins/dataTables/dataTables.tableTools.min.css" rel="stylesheet">
     <link href="assets/js/plugins/notify/pnotify.core.css" rel="stylesheet">
 
+    <link href="assets/js/plugins/datepicker/daterangepicker.css" rel="stylesheet">
+
+
+
 
 
 
@@ -36,7 +40,7 @@
         }
 
 
-        .tools,.print_ledger {
+        .tools,.print_ledger,.print_deliquent,#btn_print_ledger {
             float: left;
             margin-bottom:5px;
         }
@@ -90,9 +94,9 @@
                         <div class="panel-options">
                             <ul class="nav nav-tabs">
                                 <li class="active"><a data-toggle="tab" href="#tab-1">Apprehended Account(s)</a></li>
-                                <li class=""><a data-toggle="tab" href="#tab-2">Account Info</a></li>
-                                <li class=""><a data-toggle="tab" href="#tab-3">Consumer Ledger</a></li>
-                                <li class=""><a data-toggle="tab" href="#tab-4">Deliquent Consumer List</a></li>
+                                <li class=""><a data-toggle="tab" href="#tab-2"><i class="fa fa-user text-navy"></i> Account Info [ No Selected ]</a></li>
+                                <li class=""><a data-toggle="tab" href="#tab-3"><i class="fa fa-user text-navy"></i> Consumer Ledger [ No Selected ]</a></li>
+                                <li class=""><a data-toggle="tab" href="#tab-4">Delinquent Consumer List</a></li>
                             </ul>
                         </div>
                     </div>
@@ -135,23 +139,23 @@
                                                 <table  width="100%" style="font-size: 14px;" cellpadding="10">
                                                     <tr>
                                                         <td width="10%"><b>Reference # : </b></td>
-                                                        <td id="cell_referebce_no" width="40%" style="padding-left:40px;" >1211111</td>
+                                                        <td id="cell_reference_no" width="40%" style="padding-left:40px;" >N/A</td>
                                                         <td width="10%"><b>Account # : </b></td>
-                                                        <td id="cell_account_no" width="40%" style="padding-left:40px;">AC1211111</td>
+                                                        <td id="cell_account_no" width="40%" style="padding-left:40px;">N/A</td>
                                                     </tr>
 
                                                     <tr>
                                                         <td><b>Consumer   : </b></td>
-                                                        <td id="cell_consumer" style="padding-left:40px;">Paul Christian Rueda</td>
+                                                        <td id="cell_consumer" style="padding-left:40px;">N/A</td>
                                                         <td><b>Duration   : </b></td>
-                                                        <td id="cell_duration" style="padding-left:40px;">10 months</td>
+                                                        <td id="cell_duration" style="padding-left:40px;">N/A</td>
                                                     </tr>
 
                                                     <tr>
                                                         <td><b>Start Date : </b></td>
-                                                        <td id="cell_start_date" style="padding-left:40px;">01/28/2016</td>
+                                                        <td id="cell_start_date" style="padding-left:40px;">N/A</td>
                                                         <td><b>Total Amount : </b></td>
-                                                        <td id="cell_total_amount" style="padding-left:40px;color: red;">1,500.00</td>
+                                                        <td id="cell_total_amount" style="padding-left:40px;color: red;">N/A</td>
                                                     </tr>
                                                 </table>
 
@@ -181,18 +185,12 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <?php for($i=0;$i<=10;$i++){ ?>
-                                        <tr>
-                                            <td>January 1, 2015</td>
-                                            <td>August 2014</td>
-											<td align="right">2,100.00</td>
-                                        </tr>
-                                    <?php } ?>
+
                                     </tbody>
 									<tfoot>
 										<tr>
 											<td colspan="2" align="right"><h3>Total Back Bill Amount</h3></td>
-											<td id="cell_total_back_bill_amount" align="right" style="color:red;"><strong>24,000.00</strong></td>
+											<td id="cell_total_back_bill_amount" align="right" style="color:red;"><strong>0.00</strong></td>
 										</tr>
 									</tfoot>
                                 </table>
@@ -228,7 +226,7 @@
 
 
 							<div id="tab-4" class="tab-pane">
-								<table id="tbl_receivables_aging" class="table table-bordered">
+								<table id="tbl_deliquent_list" class="table table-bordered">
                                     <thead>
                                     <tr>
                                         <td>Account #</td>
@@ -244,18 +242,7 @@
                                     </thead>
 
                                     <tbody>
-                                    <?php for($i=0;$i<=10;$i++){ ?>
-                                        <tr>
-                                            <td>AC12000</td>
-											<td>Paul Christian Rueda</td>
-                                            <td align="right">22,600</td>
-                                            <td align="right">1,000</td>
-                                            <td align="right">21,600</td>
-                                            <td align="right">5</td>
-                                            <td align="right">3</td>
-                                            <td align="right">1,900.00</td>
-                                        </tr>
-                                    <?php } ?>
+
                                     </tbody>
 
 
@@ -301,29 +288,91 @@
 								<div class="tab-pane fade in active" id="create_new_apprehended" style="border-bottom:1px solid #d5d4d4;border-right:1px solid #d5d4d4;border-left:1px solid #d5d4d4;padding:15px;">
 									<div class="row"><!---/ row -->		
 									<form id="frm_account_details">
-										<div class="col-lg-4"><!--column-->	
-											<div class="panel panel-default" style="padding:10px 10px 10px 10px;">
-												<div class="form-group">
-															<label>Reference #</label>
-															<input class="form-control" type="text" name="reference_no" placeholder=""  data-container="body" data-trigger="manual" data-toggle="tooltip" title="Employee number is required.">
-												</div>
-											
-												<div class="form-group">
-															<label>Account No *</label>
-															<input class="form-control" type="text" name="account_no"  data-container="body" data-trigger="manual" data-toggle="tooltip" title="Employee number is required.">
-												</div>
+										<div class="col-lg-5"><!--column-->
 
-                                                <div class="form-group">
-                                                    <label> <input type="checkbox" value="1" checked="checked" name="chk_is_active"> Active</label>
+                                            <ul id="tab-content-3" class="nav nav-tabs" style="margin-left:10px;margin-right:10px;">
+                                                <li class="active">
+                                                    <a href="#tab-account-info" data-toggle="tab">
+                                                        <label class="modal_label">Account Info *</label>
+                                                    </a>
+                                                </li>
+
+                                                <li class="">
+                                                    <a href="#tab-downpayment-info" data-toggle="tab">
+                                                        <label class="modal_label">Downpayment (Optional)</label>
+                                                    </a>
+                                                </li>
+                                            </ul>
+
+                                            <div id="tab-account" class="tab-content"  style="margin-left:10px;margin-right:10px;"><!-- /tab contents -->
+
+                                                <div class="tab-pane fade in active" id="tab-account-info" style="border-bottom:1px solid #d5d4d4;border-right:1px solid #d5d4d4;border-left:1px solid #d5d4d4;padding:15px;">
+
+                                                        <div class="form-group">
+                                                            <label>Reference # *</label>
+                                                            <input class="form-control" type="text" name="reference_no" placeholder=""  data-container="body" data-trigger="manual" data-toggle="tooltip" title="Reference number is required." data-message="Please enter reference number." required>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label>Account No *</label>
+                                                            <input class="form-control" type="text" name="account_no"  data-container="body" data-trigger="manual" data-toggle="tooltip" title="Account number is required." data-message="Please enter account number." required>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label> <input type="checkbox" value="1" checked="checked" name="chk_is_active"> Active</label>
+                                                        </div>
+
                                                 </div>
 
-                                                <br />
-												
+                                                <div class="tab-pane fade" id="tab-downpayment-info" style="border-bottom:1px solid #d5d4d4;border-right:1px solid #d5d4d4;border-left:1px solid #d5d4d4;padding:15px;">
 
-											</div>
+                                                    <div class="row">
+                                                        <div class="col-lg-12">
+                                                            <div class="form-group">
+
+                                                                <label>Date Paid</label>
+                                                                <div class="input-group m-b">
+                                                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                                                    <input id="dt_end_date" name="date_paid" value="<?php echo date("m/d/Y"); ?>" type="text" class="form-control has-feedback-left" aria-describedby="inputSuccess2Status3">
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+                                                    <div class="row">
+                                                        <div class="col-lg-6">
+                                                            <div class="form-group">
+                                                                <label>Receipt #</label>
+                                                                <input class="form-control" type="text" name="receipt_no">
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-lg-6">
+                                                            <div class="form-group">
+                                                                <label>Downpayment Amount</label>
+                                                                <input id="txt_downpayment" class="form-control" type="number" name="downpayment">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+                                                </div>
+
+
+
+                                            </div>
+
+
+
+
+
+
 										</div>
+
 												
-										<div class="col-lg-8">
+										<div class="col-lg-7">
 												
 												<ul id="tab-content-2" class="nav nav-tabs" style="margin-left:10px;margin-right:10px;">
 													<li class="active">
@@ -414,7 +463,7 @@
                                     </form>
 
 									</div>
-										<br />
+										<br /><br />
 									<div class="row">
 											<div class="col-lg-12">
 												<div class="panel panel-default" style="padding:15px 10px 0px 10px;margin-top:-20px;">
@@ -451,7 +500,7 @@
 																				
 																				<tfoot>
 																					<tr>
-																						<td colspan="2" align="right"><strong>Amount per KWH</strong></td>
+																						<td colspan="2" align="right" ><i class="fa fa-pencil" style="color: #18A689"></i> <strong>Amount per KWH*</strong></td>
 																						<td align="right" style="color:red;"  contenteditable="true"><strong>9.00</strong></td>
 																						<td align="right"><strong>Total KWH</strong></td>
 																						<td align="right" style="color:red;"><strong>0</strong></td>
@@ -460,7 +509,7 @@
 																					<tr>
 																						<td colspan="2" align="right"><strong>Downpayment</strong></td>
 																						<td align="right" style="color:red;" contenteditable="true"><strong>0.00</strong></td>
-																						<td align="right"><strong>No. of Day(s)</strong></td>
+																						<td align="right" ><i class="fa fa-pencil" style="color: #18A689"></i>  <strong>No. of Day(s)*</strong></td>
 																						<td align="right" style="color:red;"  contenteditable="true"><strong>0</strong></td>
 																						<td>Day(s)</td>
 																					</tr>
@@ -483,7 +532,7 @@
                                             <div class="panel panel-default" style="padding: 10px;">
                                                 <div class="form-group">
                                                     <label>* Payment Start Date</label>
-                                                    <input id="payment_start" type="text" name="payment_start" class="form-control" value="12/06/2015">
+                                                    <input id="payment_start" type="text" name="payment_start" class="form-control" value="<?php echo date("m/d/Y")?>">
                                                 </div>
 
                                                 <div class="form-group">
@@ -570,14 +619,20 @@
 <!-- iCheck -->
 <script src="assets/js/plugins/iCheck/icheck.min.js"></script>
 
-<!-- Datepicker -->
-<script src="assets/js/plugins/datapicker/bootstrap-datepicker.js"></script>
+
 
 <!-- Data Tables -->
 <script src="assets/js/plugins/dataTables/jquery.dataTables.js"></script>
 <script src="assets/js/plugins/dataTables/dataTables.bootstrap.js"></script>
 <script src="assets/js/plugins/dataTables/dataTables.responsive.js"></script>
 <script src="assets/js/plugins/dataTables/dataTables.tableTools.min.js"></script>
+
+
+<!-- Datepicker -->
+<script src="assets/js/plugins/moment.min2.js"></script>
+<script src="assets/js/plugins/datepicker/daterangepicker.js"></script>
+
+
 
 <!-- sparkline -->
 <script src="assets/js/plugins/sparkline/jquery.sparkline.min.js"></script>

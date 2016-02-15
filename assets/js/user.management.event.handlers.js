@@ -1,5 +1,8 @@
 
 $(document).ready(function(){
+
+
+
     //initialize customer list
     var userListModule = (function(){
         var tbl_user_list;
@@ -101,7 +104,7 @@ $(document).ready(function(){
 
         var  showUserList=function(){
 
-            $('#tbl_user_list tbody').html('<tr><td colspan="7" align="center"><img src="assets/img/ajax-loader-sm.gif" /></td></tr>');
+            $('#tbl_user_list tbody').html('<tr><td colspan="6" align="center"><img src="assets/img/ajax-loader-sm.gif" /></td></tr>');
             $.getJSON("UserManagementController/ActionGetUserList", function(response){
                 tbl_user_list.clear().draw();
                 console.log(response);
@@ -199,9 +202,8 @@ $(document).ready(function(){
 
                 if(validateRequiredFields()){ //if true, all required fields are supplied
                         var pass = $('input[name="password"]').val();
-                        var cpass= $('input[name="password"]').val();
-                    if( pass==cpass){
-
+                        var cpass= $('input[name="confirm_password"]').val();
+                    if(pass==cpass){
                         if(_mode=="new"){ //if current mode is new
                         createNewUser()
 
@@ -530,6 +532,7 @@ $(document).ready(function(){
 
 
 
+
     /************************************************************************************/
 
     var _btnNew='<button class="btn btn-white btn-sm"  id="btn_new_user" data-toggle="modal" data-target="#user_modal" data-placement="left" title="Create New User" ><i class="fa fa-users"></i> Create New User</button>';
@@ -541,6 +544,14 @@ $(document).ready(function(){
     $('#btn_new_user').click(function(){
         userInfoModalModule.setMode("new");
         userInfoModalModule.clearFields(); //clear fields
+    });
+
+
+    $('input[name="birthdate"]').daterangepicker({
+        singleDatePicker: true,
+        calender_style: "picker_4"
+    }, function (start, end, label) {
+        console.log(start.toISOString(), end.toISOString(), label);
     });
 });
 

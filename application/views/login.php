@@ -52,7 +52,7 @@
     </style>
 </head>
 
-<body class="gray-bg">
+<body class="" style="background-color: #ffffff">
 
 
 <div class="loginColumns animated fadeInDown">
@@ -60,16 +60,13 @@
 
 
         <div class="col-md-6">
-            <h2 class="font-bold">Welcome to Project P_ v0.x </h2>
-            <img style="border-radius: 3px" src="
-            http://cdn-5.famouslogos.us/images/microsoft-new-logo.jpg" class="img-responsive" alt="" />
+            <h3 class="font-bold">Apprehend Consumer  Billing and Collection System</h3>
+            <img style="border-radius: 3px" src="assets/img/Pelco-Logo.png" class="img-responsive" alt="" />
 
             <p>
 
             </p>
 
-            <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut sit amet cursus metus. Pellentesque a posuere nisi. Phasellus tempus nibh urna, at laoreet nisl hendrerit sagittis. Aenean rutrum nisi in elementum elementum. Phasellus ultrices congue enim vel imperdiet. Mauris erat nulla, pharetra nec luctus et, lobortis eu nisl. Nullam semper ipsum sit amet massa convallis fermentum. Sed pretium nulla vitae dolor pharetra, quis posuere diam dignissim. Mauris lobortis quam et scelerisque varius. Nulla bibendum ligula ut risus lacinia tincidunt. Donec tristique rutrum nunc, semper ultricies urna sagittis eu. Fusce ac porttitor nisi. Phasellus eget turpis scelerisque, porta turpis non, tincidunt ante. Nulla facilisi</p>
 
 
 
@@ -111,10 +108,10 @@
     <hr/>
     <div class="row">
         <div class="col-md-6">
-            Copyright Example Company
+            Copyright nexuslifeline & aiteph development team
         </div>
         <div class="col-md-6 text-right">
-            <small>© 2014-2015</small>
+            <small>© 2015-2016</small>
         </div>
     </div>
 </div>
