@@ -27,6 +27,8 @@
     <link href="assets/css/plugins/dataTables/dataTables.tableTools.min.css" rel="stylesheet">
     <link href="assets/js/plugins/notify/pnotify.core.css" rel="stylesheet">
 
+    <link href="assets/js/plugins/datepicker/daterangepicker.css" rel="stylesheet">
+
 
 
     <style>
@@ -71,7 +73,7 @@
         <div class="wrapper wrapper-content"><!-- /main content area -->
             <div class="row">
 
-                <div class="col-lg-8 animated fadeInRight">
+                <div class="col-lg-12 animated fadeInRight">
                     <div class="mail-box-header" style="margin-bottom:-25px;">
                         <h2 style="block:inline;"><i class="fa fa-users"></i> User Management </h2>
 
@@ -119,74 +121,7 @@
 
                 </div>
 
-                <div class="col-lg-4">
-                    <div class="contact-box  animated fadeInRight">
-                        <a href="#">
-                            <div class="col-sm-4">
-                                <div class="text-center">
-                                    <img alt="image" class="img-circle m-t-xs img-responsive" src="assets/img/profile_small.jpg">
-                                    <div class="m-t-xs font-bold">Software Developer</div>
-                                </div>
-                            </div>
-                            <div class="col-sm-8">
-                                <h3><strong>Christian Rueda</strong></h3>
-                                <p><i class="fa fa-archive"></i> JDEV IT Business Solution</p><br>
 
-                                <address>
-                                    <i class="fa fa-map-marker"></i> San Jose, San Simon, Pampanga<br>
-                                    <i class="fa fa-map-marker"></i> chrisrueda14@yahoo.com<br>
-                                    <i class="fa fa-list-alt"></i> 322-3542<br>
-                                </address>
-                            </div>
-
-                            <div class="text-right">
-                                <a class="btn btn-xs btn-white"><i class="fa fa-pencil"></i> Edit Customer Info </a>
-                                <a id="btn-post-payment" class="btn btn-xs btn-white"><i class="fa fa-credit-card"></i> Post Payment </a>
-                            </div>
-
-
-                        </a>
-                    </div>
-
-                </div>
-
-                <div class="col-lg-4">
-                    <div class="contact-box  animated fadeInRight" style="padding:10px;">
-
-                        <div class="panel-heading">
-                            <div class="panel-options">
-                                <ul class="nav nav-tabs">
-                                    <li class="active"><a data-toggle="tab" href="#tab-invoice-1">Account Receivable</a></li>
-
-                                </ul>
-                            </div>
-                        </div>
-
-                        <div class="panel-body">
-                            <div class="tab-content">
-                                <div id="tab-invoice-1" class="tab-pane active">
-                                    <div class="row">
-                                        <div class="col-xs-12">
-                                            <span>Current Receivable</span>
-                                            <h2>$ 1,231,809.00</h2>
-                                            <div class="text-center m">
-                                                <span id="sparkline8"></span>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <br />
-
-                                </div>
-
-
-                            </div>
-                        </div>
-
-
-
-                    </div>
-                </div>
             </div>
         </div><!-- /main content area -->
 
@@ -232,19 +167,19 @@
                                             <div class="col-lg-6">
                                                 <div class="form-group">
                                                     <label>Firstname</label>
-                                                    <input class="form-control" type="text" name="firstname" placeholder="Firstname"  data-container="body" data-trigger="manual" data-toggle="tooltip" title="Firstame number is required.">
+                                                    <input class="form-control" type="text" name="firstname" placeholder="Firstname"  data-container="body" data-trigger="manual" data-toggle="tooltip" title="Firstname is required."data-message="Please make sure you enter Firstname." required>
                                                 </div>
                                                 <div class="form-group">
                                                     <label>Middlename</label>
-                                                    <input class="form-control" type="text" name="middlename" placeholder="Middlename"  data-container="body" data-trigger="manual" data-toggle="tooltip" title="Middlename number is required.">
+                                                    <input class="form-control" type="text" name="middlename" placeholder="Middlename"  data-container="body" data-trigger="manual" data-toggle="tooltip" title="Middlename is required."data-message="Please make sure you enter Middlename." required>
                                                 </div>
                                                 <div class="form-group">
                                                     <label>Lastname</label>
-                                                    <input class="form-control" type="text" name="lastname" placeholder="Lastname"  data-container="body" data-trigger="manual" data-toggle="tooltip" title="Lastname number is required.">
+                                                    <input class="form-control" type="text" name="lastname" placeholder="Lastname"  data-container="body" data-trigger="manual" data-toggle="tooltip" title="Lastname is required."data-message="Please make sure you enter Lastname." required>
                                                 </div>
                                                 <div class="form-group">
                                                     <label>Birthdate</label>
-                                                    <input class="form-control" type="text" name="birthdate" placeholder="YYYY/MM/DD"  data-container="body" data-trigger="manual" data-toggle="tooltip" title="Birthdate number is required.">
+                                                    <input class="form-control" type="text" name="birthdate" placeholder="YYYY/MM/DD"  data-container="body" data-trigger="manual" data-toggle="tooltip" title="Birthdate is required."data-message="Please make sure you enter Birthdate." required>
                                                 </div>
 
 
@@ -262,30 +197,30 @@
                                             <div class="col-lg-6">
                                                 <div class="form-group">
                                                     <label>Mobile No</label>
-                                                    <input class="form-control" type="text" name="mobile" placeholder="Mobile #"  data-container="body" data-trigger="manual" data-toggle="tooltip" title="Mobile No is required.">
+                                                    <input class="form-control" type="text" name="mobile" placeholder="Mobile #"  data-container="body" data-trigger="manual" data-toggle="tooltip" title="Mobile No# is required." data-message="Please make sure you enter Mobile No#." required >
                                                 </div>
                                                 <div class="form-group">
                                                     <label>Landline No</label>
-                                                    <input class="form-control" type="text" name="landline" placeholder="Landline #"  data-container="body" data-trigger="manual" data-toggle="tooltip" title="Employee number is required.">
+                                                    <input class="form-control" type="text" name="landline" placeholder="Landline #"  data-container="body" data-trigger="manual" data-toggle="tooltip" title="Landline No is required." data-message="Please make sure you enter Landline No." required >
                                                 </div>
 
                                                 <div class="form-group">
                                                     <label>Username </label>
-                                                    <input class="form-control" type="text" name="username" placeholder="Username"  data-container="body" data-trigger="manual" data-toggle="tooltip" title="Username is required.">
+                                                    <input class="form-control" type="text" name="username" placeholder="Username"  data-container="body" data-trigger="manual" data-toggle="tooltip" title="Username is required."data-message="Please make sure you enter Username." required >
                                                 </div>
 
                                                 <div class="form-group">
                                                     <label>Password</label>
-                                                    <input class="form-control" type="password" name="password" placeholder="Password"  data-container="body" data-trigger="manual" data-toggle="tooltip" title="Password is required.">
+                                                    <input class="form-control" type="password" name="password" placeholder="Password"  data-container="body" data-trigger="manual" data-toggle="tooltip" title="Password is required."data-message="Please make sure you enter Password." required >
                                                 </div>
                                                 <div class="form-group">
                                                     <label>Confirm Password</label>
-                                                    <input class="form-control" type="password" name="confirm_password" placeholder="Confirm Password"  data-container="body" data-trigger="manual" data-toggle="tooltip" title="Confirm Password is required.">
+                                                    <input class="form-control" type="password" name="confirm_password" placeholder="Confirm Password"  data-container="body" data-trigger="manual" data-toggle="tooltip" title="Confirm Password is required."data-message="Please make sure you enter Confirm Password." required >
                                                 </div>
 
                                                 <div class="form-group">
                                                     <label>Email Address </label>
-                                                    <input class="form-control" type="text" name="email" placeholder="Email Address"  data-container="body" data-trigger="manual" data-toggle="tooltip" title="Email Address is required.">
+                                                    <input class="form-control" type="text" name="email" placeholder="Email Address"  data-container="body" data-trigger="manual" data-toggle="tooltip" title="Email Address is required."data-message="Please make sure you enter Email Address." required >
                                                 </div>
 
                                             </div>
@@ -343,7 +278,12 @@
 <script src="assets/js/plugins/iCheck/icheck.min.js"></script>
 
 <!-- Datepicker -->
-<script src="assets/js/plugins/datapicker/bootstrap-datepicker.js"></script>
+
+
+<!-- Datepicker -->
+<script src="assets/js/plugins/moment.min2.js"></script>
+<script src="assets/js/plugins/datepicker/daterangepicker.js"></script>
+
 
 <!-- PNotify -->
 <script type="text/javascript" src="assets/js/plugins/notify/pnotify.core.js"></script>

@@ -256,30 +256,30 @@
                                             <div class="col-lg-6">
                                                 <div class="form-group">
                                                     <label>Consumer Name *</label>
-                                                    <input class="form-control" type="text" name="consumer_name" placeholder="Consumer Name"  data-container="body" data-trigger="manual" data-toggle="tooltip" title="Employee number is required.">
+                                                    <input class="form-control" type="text" name="consumer_name" placeholder="Consumer Name"  data-container="body" data-trigger="manual" data-toggle="tooltip" title="Consumer Name is required."data-message="Please make sure you enter Consumer Name." required >
                                                 </div>
 
                                                 <div class="form-group">
                                                     <label>Contact No</label>
-                                                    <input class="form-control" type="text" name="contact_no" placeholder="Contact Number"  data-container="body" data-trigger="manual" data-toggle="tooltip" title="Employee number is required.">
+                                                    <input class="form-control" type="text" name="contact_no" placeholder="Contact Number"  data-container="body" data-trigger="manual" data-toggle="tooltip" title="Contact Number is required."data-message="Please make sure you enter Contact Number." required >
                                                 </div>
                                                 <div class="form-group">
                                                     <label>Email Address </label>
-                                                    <input class="form-control" type="text" name="email" placeholder="Email Address"  data-container="body" data-trigger="manual" data-toggle="tooltip" title="Employee number is required.">
+                                                    <input class="form-control" type="text" name="email" placeholder="Email Address"  data-container="body" data-trigger="manual" data-toggle="tooltip" title="Email Address is required."data-message="Please make sure you enter Email Address." required >
                                                 </div>
 
                                                 <div class="form-group">
                                                     <label>Meter No# </label>
-                                                    <input class="form-control" type="text" name="meter_no" placeholder="Meter No#"  data-container="body" data-trigger="manual" data-toggle="tooltip" title="Employee number is required.">
+                                                    <input class="form-control" type="text" name="meter_no" placeholder="Meter No#"  data-container="body" data-trigger="manual" data-toggle="tooltip" title="Meter No is required."data-message="Please make sure you enter Meter No." required >
                                                 </div>
 
                                                 <div class="form-group">
                                                     <label>House Number</label>
-                                                    <input class="form-control" type="text" name="house_no" placeholder="House Number"  data-container="body" data-trigger="manual" data-toggle="tooltip" title="Employee number is required.">
+                                                    <input class="form-control" type="text" name="house_no" placeholder="House Number"  data-container="body" data-trigger="manual" data-toggle="tooltip" title="House Number is required."data-message="Please make sure you enter House Number." required >
                                                 </div>
                                                 <div class="form-group">
                                                     <label>Street </label>
-                                                    <input class="form-control" type="text" name="street" placeholder="Street"  data-container="body" data-trigger="manual" data-toggle="tooltip" title="Employee number is required.">
+                                                    <input class="form-control" type="text" name="street" placeholder="Street"  data-container="body" data-trigger="manual" data-toggle="tooltip" title="Street is required."data-message="Please make sure you enter Street." required >
                                                 </div>
 
                                             </div>
@@ -287,26 +287,26 @@
                                             <div class="col-lg-6">
                                                 <div class="form-group">
                                                     <label>Barangay *</label>
-                                                    <input class="form-control" type="text" name="barangay" placeholder="Barangay"  data-container="body" data-trigger="manual" data-toggle="tooltip" title="Employee number is required.">
+                                                    <input class="form-control" type="text" name="barangay" placeholder="Barangay"  data-container="body" data-trigger="manual" data-toggle="tooltip" title="Barangay is required."data-message="Please make sure you enter Barangay." required >
                                                 </div>
                                                 <div class="form-group">
                                                     <label>Municipality *</label>
-                                                    <input class="form-control" type="text" name="municipality" placeholder="Municipality"  data-container="body" data-trigger="manual" data-toggle="tooltip" title="Employee number is required.">
+                                                    <input class="form-control" type="text" name="municipality" placeholder="Municipality"  data-container="body" data-trigger="manual" data-toggle="tooltip" title="Municipality is required."data-message="Please make sure you enter Municipality." required >
                                                 </div>
                                                 <div class="form-group">
                                                     <label>Province </label>
-                                                    <input class="form-control" type="text" name="province" placeholder="Province"  data-container="body" data-trigger="manual" data-toggle="tooltip" title="Employee number is required.">
+                                                    <input class="form-control" type="text" name="province" placeholder="Province"  data-container="body" data-trigger="manual" data-toggle="tooltip" title="Province is required."data-message="Please make sure you enter Province." required >
                                                 </div>
                                                 <div class="form-group">
                                                     <label>Zipcode </label>
-                                                    <input class="form-control" type="text" name="zipcode" placeholder="Zipcode"  data-container="body" data-trigger="manual" data-toggle="tooltip" title="Employee number is required.">
+                                                    <input class="form-control" type="text" name="zipcode" placeholder="Zipcode"  data-container="body" data-trigger="manual" data-toggle="tooltip" title="Zipcode is required."data-message="Please make sure you enter Zipcode." required >
                                                 </div>
                                                 <div class="form-group">
                                                     <label>Second Address </label><br/>
-                                                    <textarea name="second_address">
+                                                    <textarea name="second_address" class="form-control" rows="5">
 
                                                     </textarea>
-                                                    <!--<input class="form-control" type="text" name="second_address" placeholder="Second Address"  data-container="body" data-trigger="manual" data-toggle="tooltip" title="Employee number is required.">-->
+
                                                 </div>
                                             </div>
                                     </div>

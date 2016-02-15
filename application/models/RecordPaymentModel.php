@@ -163,6 +163,63 @@ class RecordPaymentModel extends CI_Model
     }
 
 
+
+   function ReturnCancelReceipt(){
+       try{
+           $receipt_no = $this->input->post('receipt_no');
+           $this -> db -> set('is_active',0);
+           $this -> db -> update('payment_item_list');
+           $this -> db -> where('receipt_no', $receipt_no);
+           return true;
+       }catch(Exception $e){
+           die(json_encode($this->error));
+       }
+   }
+
+
+
+
+    function ReturnCollectionList($start=NULL,$end=NULL,$param=""){
+
+        $start=($start==NULL?date('Y-m-d'):date('Y-m-d',strtotime($start)));
+        $end=($end==NULL?date('Y-m-d'):date('Y-m-d',strtotime($end)));
+
+        $rows=array();
+        $sql="SELECT m.* FROM
+            (
+                    SELECT a.down_payment_date as date_paid,a.down_payment_receipt_no as receipt_no,
+                    a.account_no,b.consumer_name,
+                    'Downpayment.' as description,a.down_payment as amount_paid, 'Active' as is_active
+                    FROM bill_account_info as a
+                    LEFT JOIN customer_info as b ON a.consumer_id=b.consumer_id
+                    WHERE a.down_payment>0 AND a.down_payment_date BETWEEN '$start' AND '$end'
+                    ".($param==""?"":" AND (a.down_payment_receipt_no LIKE '$param%' OR a.account_no LIKE '$param%' OR b.consumer_name LIKE '$param%')")."
+
+                    UNION ALL
+
+
+                    SELECT a.date_paid,a.receipt_no,c.account_no,d.consumer_name,
+                    '' as description,SUM(a.payment_amount)as amount_paid,IF(a.is_active,'Active','Cancelled')as is_active
+                    FROM payment_item_list as a
+                    INNER JOIN (payment_info as b
+                    LEFT JOIN (bill_account_info as c
+                    LEFT JOIN customer_info as d ON c.consumer_id=d.consumer_id) ON
+                    b.bill_account_id=c.bill_account_id) ON a.payment_id=b.payment_id
+                    WHERE a.date_paid BETWEEN '$start' AND '$end'
+                    ".($param==""?"":" AND (a.receipt_no LIKE '$param%' OR c.account_no LIKE '$param%' OR d.consumer_name LIKE '$param%')")."
+                    GROUP BY a.receipt_no
+          )as m ORDER BY m.date_paid,m.receipt_no ASC";
+        $query = $this->db->query($sql);
+        foreach ($query->result() as $row) //this will return only 1 row
+        {
+            $rows[]=$row; //assign each row of query in array
+        }
+        return $rows;
+
+    }
+
+
+
 }
 
 ?>

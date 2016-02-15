@@ -30,7 +30,7 @@
     <link href="assets/css/plugins/dataTables/dataTables.tableTools.min.css" rel="stylesheet">
     <link href="assets/js/plugins/notify/pnotify.core.css" rel="stylesheet">
 
-
+    <link href="assets/js/plugins/datepicker/daterangepicker.css" rel="stylesheet">
 
     <style>
         .toolbar{
@@ -91,7 +91,7 @@
                         <div class="panel-options">
                             <ul class="nav nav-tabs">
                                 <li class="active"><a data-toggle="tab" href="#tab-1">List of Payments</a></li>
-
+                                <li class=""><a data-toggle="tab" href="#tab-2">Collection Report</a></li>
                             </ul>
                         </div>
                     </div>
@@ -124,6 +124,70 @@
                                 </div>
                             </div>
 
+                            <div id="tab-2" class="tab-pane">
+                                <br />
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="panel panel-default" style="padding:15px 10px 0px 10px;margin-top:-20px;">
+                                            <div class="row">
+                                                <div class="col-lg-3">
+                                                        <label>Period Start</label>
+                                                        <div class="input-group m-b">
+                                                            <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                                            <input id="dt_start_date" name="start_date" type="text" value="<?php echo date("m/d/Y"); ?>" class="form-control has-feedback-left" aria-describedby="inputSuccess2Status3">
+                                                        </div>
+                                                </div>
+
+                                                <div class="col-lg-3">
+                                                    <label>Period End</label>
+                                                    <div class="input-group m-b">
+                                                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                                        <input id="dt_end_date" name="end_date" type="text" value="<?php echo date("m/d/Y"); ?>" class="form-control has-feedback-left" aria-describedby="inputSuccess2Status3">
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-lg-6">
+
+                                                    <div class="form-group">
+                                                            <label>Search :</label>
+                                                            <div class="input-group"><input type="text" id="txt_search" name="search" placeholder="Search" class="input-sm form-control"> <span class="input-group-btn">
+                                                            <button id="btn_apply_filter" type="button" class="btn btn-sm btn-primary"> Refresh List</button> </span></div>
+                                                    </div>
+                                                </div>
+
+
+                                            </div>
+
+
+
+                                            <br />
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="table-responsive">
+                                    <table id="tbl_collection_report" class="table table-bordered">
+                                        <thead>
+                                        <tr>
+
+
+                                            <td>Date Paid</td>
+                                            <td>Receipt #</td>
+                                            <td>Account #</td>
+                                            <td>Consumer</td>
+                                            <td>Description</td>
+                                            <td>Status</td>
+                                            <td>Amount Paid</td>
+
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -204,7 +268,7 @@
 
 									<div class="row">
 										<div class="col-lg-12">
-                                            <div class="table-responsive">
+                                            <div class="table-responsive" style="overflow-y: scroll;height: 450px;">
 											    <table id="tbl_item_schedule" class="table table-bordered">
 																				<thead>
 																					<tr>
@@ -252,6 +316,27 @@
     </div><!---/invoice modal--->
 
 
+    <div id="confirm-modal" data-save-mode="" class="modal fade" tabindex="-1" role="dialog"><!--modal-->
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content"><!---content--->
+                <div class="modal-header">
+                    <button type="button" class="close"   data-dismiss="modal" aria-hidden="true">X</button>
+                    <h4 class="modal-title"><span id="modal_mode"> </span>Cancel OR</h4>
+
+                </div>
+
+                <div class="modal-body">
+                    <p id="modal-body-message">Are you sure ?</p>
+                </div>
+
+                <div class="modal-footer">
+                    <button id="btn_yes" type="button" class="btn btn-danger" data-dismiss="modal">Yes</button>
+                    <button id="btn-close" type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                </div>
+            </div><!---content---->
+        </div>
+    </div><!---modal-->
+
 
     <!-- /footer -->
     <?php $this->load->view('templates/footer'); ?>
@@ -272,8 +357,12 @@
 <!-- iCheck -->
 <script src="assets/js/plugins/iCheck/icheck.min.js"></script>
 
+
+
 <!-- Datepicker -->
-<script src="assets/js/plugins/datapicker/bootstrap-datepicker.js"></script>
+<script src="assets/js/plugins/moment.min2.js"></script>
+<script src="assets/js/plugins/datepicker/daterangepicker.js"></script>
+
 
 <!-- Data Tables -->
 <script src="assets/js/plugins/dataTables/jquery.dataTables.js"></script>

@@ -375,6 +375,8 @@ class ApprehendedConsumerModel extends CI_Model {
                 'duration' => $this->input->post('duration',TRUE),
                 'payment_schedule_remarks' => $this->input->post('payment_schedule_remarks',TRUE),
                 'down_payment' => $this->input->post('down_payment',TRUE),
+                'down_payment_date' => date('Y-m-d',strtotime($this->input->post('date_paid',TRUE))),
+                'down_payment_receipt_no' => $this->input->post('receipt_no',TRUE),
                 'no_of_days' => $this->input->post('no_of_days',TRUE),
                 'amount_kwh' => $this->input->post('amount_kwh',TRUE),
                 'total_back_bill_amount' => $this->input->post('total_back_bill_amount',TRUE),
@@ -470,12 +472,23 @@ class ApprehendedConsumerModel extends CI_Model {
 							b.consumer_name
 					)as consumer,
 					b.contact_no,
+					(a.total_back_bill_amount-IFNULL(o.TotalPayment,0)) as TotalBalance,
                     a.total_back_bill_amount,
                     n.period
                                            FROM
 					bill_account_info as a
 			LEFT JOIN
 					customer_info as b ON a.consumer_id=b.consumer_id
+					
+					
+			LEFT JOIN
+                (SELECT a.bill_account_id,SUM(b.payment_amount)as TotalPayment FROM payment_info as a
+                    INNER JOIN payment_item_list as b ON a.payment_id=b.payment_id
+                    WHERE b.is_active=1
+                    GROUP BY a.bill_account_id
+                )as o ON a.bill_account_id=o.bill_account_id
+
+                
 
             LEFT JOIN
 
@@ -585,7 +598,7 @@ class ApprehendedConsumerModel extends CI_Model {
 
 
         (SELECT a.bill_account_id,SUM(b.payment_amount)as TotalPayment FROM payment_info as a
-        INNER JOIN payment_item_list as b ON a.payment_id=b.payment_id
+        INNER JOIN payment_item_list as b ON a.payment_id=b.payment_id WHERE b.is_active=1
         GROUP BY a.bill_account_id)as tp
 
         ON cs.bill_account_id=tp.bill_account_id
@@ -606,7 +619,7 @@ class ApprehendedConsumerModel extends CI_Model {
 
 
         (SELECT a.bill_account_id,SUM(a.due_amount)As AccumulatedBalance FROM bill_payment_schedule as a
-        WHERE a.is_paid=0 AND a.sched_payment_date<=NOW()
+        WHERE a.sched_payment_date<=NOW()
         GROUP BY a.bill_account_id)as accum
 
         ON cs.bill_account_id=accum.bill_account_id
@@ -626,7 +639,7 @@ class ApprehendedConsumerModel extends CI_Model {
 
 
         ON cs.bill_account_id=pm.bill_account_id)as g
-        WHERE g.DelayedMonths>0";
+        WHERE g.DelayedMonths>0 ORDER By g.DelayedMonths DESC,g.consumer_name ASC";
 
         $query = $this->db->query($sql);
         foreach ($query->result() as $row) //this will return only 1 row

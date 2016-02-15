@@ -91,7 +91,7 @@ $(document).ready(function(){
 
             var  showItemList=function(){
 
-                $('#tbl_item_list tbody').html('<tr><td colspan="6" align="center"><img src="assets/img/ajax-loader-sm.gif" /></td></tr>');
+                $('#tbl_item_list tbody').html('<tr><td colspan="7" align="center"><img src="assets/img/ajax-loader-sm.gif" /></td></tr>');
                 $.getJSON("ItemManagementController/ActionGetItemList", function(response){
                         tbl_item_list.clear().draw();
                         console.log(response);

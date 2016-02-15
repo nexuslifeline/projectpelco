@@ -49,6 +49,48 @@ class RecordPaymentController extends CI_Controller {
     }
 
 
+    function ActionCancelReceipt(){
+        if($this->RecordPaymentModel->ReturnCancelReceipt()){
+            echo json_encode(array(
+                'stat'=>'success'
+            ));
+
+        }else{
+
+
+        }
+
+    }
+
+
+    function ActionShowCollectionList(){
+        $start=$this->input->get('start');
+        $end=$this->input->get('end');
+        $param=$this->input->get('param');
+
+        echo json_encode(
+            $this->RecordPaymentModel->ReturnCollectionList( $start,$end,$param)
+        );
+    }
+
+
+    function ActionPreviewCollectionReport(){
+        $data['start']=$this->input->get('start');
+        $data['end']=$this->input->get('end');
+        $data['list']=$this->RecordPaymentModel->ReturnCollectionList( $this->input->get('start'),$this->input->get('end'),$this->input->get('param'));
+
+        $this->load->library('m_pdf');
+        $pdf = $this->m_pdf->load('A4-L'); //pass the instance of the mpdf class
+
+        $content=$this->load->view('reports/rpt_collection',$data,TRUE); //load our template
+        $pdf->setFooter('{PAGENO}');
+        $pdf->WriteHTML($content);
+
+
+        //just output it on browser
+        $pdf->Output();
+    }
+
 
 
 }

@@ -1,5 +1,7 @@
 
 var tbl_item_schedule;
+var tbl_collection_report;
+
 var oSchedTable={
             "body"          :       "#tbl_item_schedule > tbody",
             "icon"          :       "td:eq(0)",
@@ -15,6 +17,7 @@ var oSchedTable={
 
 
 var tbl_payment_list;
+
 var oPaymentList={
     "body"          :       "#tbl_payment_list > tbody",
     "status"          :       "td:eq(0)",
@@ -28,11 +31,10 @@ var oPaymentList={
 };
 
 
-var tbl_customer_ledger;
-
 
 
 $(document).ready(function(){
+
 
 
     /**
@@ -60,9 +62,12 @@ $(document).ready(function(){
                             ,
                             'render': function(data, type, full, meta){
                                 if(data==1){
-                                    return "<center><a href='#'><i class='fa fa-check' style='color: green;'></i></a></center>";
+
+                                    return "<center><a href='#' ><i  class='fa fa-check' style='color: green;'></i></a></center>";
+
                                 }else{
 
+                                    return "<center><a href='#' ><i  class='fa fa-remove' style='color: red;'></i></a></center>";
                                 }
                             }
 
@@ -82,7 +87,54 @@ $(document).ready(function(){
             })();
 
 
-            var showPaymentList=(function(){
+        var bindEventHandlers=(function(){
+            /**
+             *
+             *	fires when edit invoice button on selected row is clicked
+             *
+             */
+
+
+            $('#tbl_payment_list tbody').on('click','a[href="#"]',function(){
+                var row=$(this).closest('tr');
+                var stat = row.find('i');
+                var receipt_no = row.find('td').eq(2).text();
+                if(stat.hasClass('fa-check')) {
+                    cancelEntry.showCancelModal();
+                    $('#btn_yes').click(function(){
+                        $.ajax({
+                            "dataType":"JSON",
+                            "type":"POST",
+                            "url":"RecordPaymentController/ActionCancelReceipt",
+                            "data": {receipt_no:receipt_no}
+                        })
+                        .success(function(response){ //if request is successful
+                            if(response.stat=='success'){
+                                stat.removeClass('fa-check');
+                                stat.addClass('fa-remove')
+                                stat.attr('style',"color:red");
+                            };
+
+                        })
+                            .error(function(xhr,stat,error){ //if error occurs
+                                alert(xhr.responseText);
+                                console.log(xhr);
+                            });
+
+
+                    });
+
+                }
+            });
+
+
+
+
+
+
+        })();
+
+        var showPaymentList=(function(){
                 $('#tbl_payment_list tbody').html('<tr><td colspan="7" align="center"><img src="assets/img/ajax-loader-sm.gif" /></td></tr>');
 
                 $.getJSON('RecordPaymentController/ActionShowPaymentList', function(response){
@@ -121,19 +173,14 @@ $(document).ready(function(){
 
 
 
-
     /**
      * payment entry modal
      */
     var modalPaymentEntry=(function(){
 
-
-
         var showModal=function(){
             $('#payment_modal').modal('show');
         };
-
-
 
         return {
             showModal       :       showModal
@@ -141,6 +188,22 @@ $(document).ready(function(){
 
     })();
 
+
+
+
+
+
+
+    var cancelEntry=(function(){
+        var showCancelModal=function(){
+            $('#confirm-modal').modal('show');
+        };
+
+        return {
+            showCancelModal       :       showCancelModal
+        };
+
+    })();
 
     /**
      * item schedule list on modal
@@ -324,6 +387,49 @@ $(document).ready(function(){
     })();
 
 
+    /**
+     * collection report datatable
+     */
+    var dtCollectionReportList=(function(){
+
+        var initializeCollectionDatatable=(function(){
+            tbl_collection_report=$('#tbl_collection_report').DataTable({
+                "bFilter":false,
+                "bPaginate": false,
+                "bLengthChange": false,
+                "dom": '<"print_collection">frtip',
+                "oLanguage": {
+                    "sSearch": "Search: ",
+                    "sProcessing": "Please wait..."
+                },
+                "rowCallback":function( row, data, index ){
+                    $("td:eq(6)",row).attr({
+                        "align":"right"
+                    });
+                }
+            });
+        })();
+
+
+        var createToolBarButton=(function(){
+            var _btnPrint='<a href="RecordPaymentController/ActionPreviewCollectionReport" target="_blank"><button class="btn btn-white btn-sm"  id="btn_print_collection" data-toggle="tooltip" data-placement="left" title="Print Collection" ><i class="fa fa-paste"></i> Print Collection Report</button></a>';
+            $("div.print_collection").html(_btnPrint);
+        })();
+
+
+
+    })();
+
+
+    $(document).on('click','#btn_print_collection',function(){
+
+        var _start=$('#dt_start_date').val();
+        var _end=$('#dt_end_date').val();
+        var _param=$('#txt_search').val();
+
+        $(this).closest("a").attr("href","RecordPaymentController/ActionPreviewCollectionReport?start="+_start+"&end="+_end+"&param="+_param);
+    });
+
 
     $('#cbo_consumer').change(function(){
         $('#tbl_item_schedule tbody').html('<tr><td colspan="7" align="center"><img src="assets/img/ajax-loader-sm.gif" /></td></tr>');
@@ -406,6 +512,13 @@ $(document).ready(function(){
     });
 
 
+    $('#dt_end_date,#dt_start_date').daterangepicker({
+        singleDatePicker: true,
+        calender_style: "picker_4"
+    }, function (start, end, label) {
+        console.log(start.toISOString(), end.toISOString(), label);
+    });
+
     /**
      * User defined Functions
       * @param evt
@@ -465,7 +578,7 @@ $(document).ready(function(){
                     {"name"  :  "itemid[]"   ,"value"   :   data[getCellIndex(oSchedTable.icon)]   },
                     {"name"  :  "description[]"   ,"value"   :   data[getCellIndex(oSchedTable.due_date)]   },
                     {"name"  :  "payamount[]"   ,"value"   :   parseFloat(data[getCellIndex(oSchedTable.pay_amount)])   },
-                    {"name"  :  "txndate[]"   ,"value"      :     data[getCellIndex(oSchedTable.txn_date)]   },
+                    {"name"  :  "txndate[]"   ,"value"      :      data[getCellIndex(oSchedTable.txn_date)]   },
                     {"name"  :  "receiptno[]"   ,"value"   :      parseFloat(data[getCellIndex(oSchedTable.receipt_no)])   },
                     {"name"  :  "dueamount[]"   ,"value"   :      parseFloat(data[getCellIndex(oSchedTable.due_amount)])   }
                 );
@@ -493,11 +606,39 @@ $(document).ready(function(){
 
 
 
+    var showCollectionReportList=(function(){
+        $('#tbl_collection_report tbody').html('<tr><td colspan="7" align="center"><img src="assets/img/ajax-loader-sm.gif" /></td></tr>');
 
+        var startDate=$('#dt_start_date').val();
+        var endDate=$('#dt_end_date').val();
+        var param=$('#txt_search').val();
 
+        $.getJSON('RecordPaymentController/ActionShowCollectionList',{start:startDate,end:endDate,param:param}, function(response){
+            //console.log(response);
+            tbl_collection_report.clear().draw();
 
+            $.each(response,function(index,value){
+                tbl_collection_report.row.add([
+                    value.date_paid,
+                    value.receipt_no,
+                    value.account_no,
+                    value.consumer_name,
+                    value.description,
+                    value.is_active,
+                    accounting.formatNumber(value.amount_paid,2)
+                ]).draw();
 
+            });
 
+        });
+    });
+
+    showCollectionReportList();
+
+    $('#btn_apply_filter').click(function(){
+        showCollectionReportList();
+    });
 
 
 });
+
