@@ -50,6 +50,10 @@ class RecordPaymentController extends CI_Controller {
 
 
     function ActionCancelReceipt(){
+        //@03/12/106
+        //note: must add update query that will set schedule to is_paid=0
+
+
         if($this->RecordPaymentModel->ReturnCancelReceipt()){
             echo json_encode(array(
                 'stat'=>'success'

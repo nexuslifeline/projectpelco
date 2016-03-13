@@ -230,7 +230,7 @@ $(document).ready(function(){
                             updateCachedData(tbl_item_schedule,this); //update cached data of payment cell
 
                                 $(this).html(
-                                    accounting.formatNumber($(this).text(),2)
+                                    accounting.formatNumber($(this).text(),4)
                                 ).blur();
 
 
@@ -300,11 +300,11 @@ $(document).ready(function(){
                                         if (dueAmount < payAmount) {
                                             $(this).html(
                                                 iconInvalid +
-                                                accounting.formatNumber(payAmount, 2)
+                                                accounting.formatNumber(payAmount, 4)
                                             );
                                         } else {
                                             $(this).html(
-                                                accounting.formatNumber(payAmount, 2)
+                                                accounting.formatNumber(payAmount, 4)
                                             );
                                         }
                                     }else if($(this).index()==getCellIndex(oSchedTable.txn_date)){
@@ -447,7 +447,7 @@ $(document).ready(function(){
 
                     data.item_id,
                     data.sched_payment_date,
-                    accounting.formatNumber(data.Remaining,2),
+                    accounting.formatNumber(data.Remaining,4),
 
                     "",
                     "",
@@ -577,10 +577,10 @@ $(document).ready(function(){
                 serialData.push(
                     {"name"  :  "itemid[]"   ,"value"   :   data[getCellIndex(oSchedTable.icon)]   },
                     {"name"  :  "description[]"   ,"value"   :   data[getCellIndex(oSchedTable.due_date)]   },
-                    {"name"  :  "payamount[]"   ,"value"   :   parseFloat(data[getCellIndex(oSchedTable.pay_amount)])   },
+                    {"name"  :  "payamount[]"   ,"value"   :   parseFloat(accounting.unformat(data[getCellIndex(oSchedTable.pay_amount)]) )  },
                     {"name"  :  "txndate[]"   ,"value"      :      data[getCellIndex(oSchedTable.txn_date)]   },
                     {"name"  :  "receiptno[]"   ,"value"   :      parseFloat(data[getCellIndex(oSchedTable.receipt_no)])   },
-                    {"name"  :  "dueamount[]"   ,"value"   :      parseFloat(data[getCellIndex(oSchedTable.due_amount)])   }
+                    {"name"  :  "dueamount[]"   ,"value"   :      parseFloat(accounting.unformat(data[getCellIndex(oSchedTable.due_amount)]))   }
                 );
             }
 
@@ -591,6 +591,7 @@ $(document).ready(function(){
             "value" :  $("#cbo_consumer").val()
         });
 
+        console.log(serialData);
 
 
 
@@ -625,7 +626,7 @@ $(document).ready(function(){
                     value.consumer_name,
                     value.description,
                     value.is_active,
-                    accounting.formatNumber(value.amount_paid,2)
+                    accounting.formatNumber(value.amount_paid,4)
                 ]).draw();
 
             });

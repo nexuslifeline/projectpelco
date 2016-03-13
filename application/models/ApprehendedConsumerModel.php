@@ -172,7 +172,7 @@ class ApprehendedConsumerModel extends CI_Model {
 				FROM bill_account_info as a
 				LEFT JOIN bill_payment_schedule as b
 				ON a.bill_account_id=b.bill_account_id
-			WHERE a.bill_account_id=$id";
+			WHERE a.bill_account_id=$id ORDER BY b.sched_payment_date";
         $query = $this->db->query($sql);
         foreach ($query->result() as $row)
         {
@@ -648,6 +648,10 @@ class ApprehendedConsumerModel extends CI_Model {
         }
         return $rows;
     }
+
+
+
+
 
 
 }

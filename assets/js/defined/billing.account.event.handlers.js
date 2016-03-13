@@ -171,7 +171,7 @@ $(document).ready(function(){
                     tbl_payment_schedule_list.row.add([
                             value.sched_payment_date,
                             value.bill_description,
-                            accounting.formatNumber(value.due_amount,2)
+                            accounting.formatNumber(value.due_amount,4)
                     ]).draw();
 
                     total+=parseFloat(value.due_amount);
@@ -380,7 +380,7 @@ $(document).ready(function(){
         var initializeAccountInfoScheduleDatatable=(function(){
             tbl_payment_schedule_list=$('#tbl_payment_schedule_list').DataTable({
                 "bLengthChange": false,
-                "order": [[0, "desc"]],
+                "order": [[0, "asc"]],
                 "dom": '<"print_schedule">frtip',
                 "oLanguage": {
                     "sSearch": "Search: ",
@@ -539,6 +539,7 @@ $(document).ready(function(){
             tbl_item_cart=$('#tbl_item_cart').DataTable({
                 "iDisplayLength":7,
                 "bLengthChange":false,
+                "bFilter":false,
                 "order": [[ 0, "desc" ]],
                 "oLanguage": {
                     "sSearch": "Search: ",
@@ -779,12 +780,12 @@ $(document).ready(function(){
             var _momentDate = moment(_startDate);
 
             clear(); //clear rows of schedule table
-
+            _momentDate.add('months',-1);
             for(var i=0;i<=_max-1;i++){
                 addRow(
                     [
-                        _momentDate.add('months',i).format('MM/DD/YYYY'),
-                        accounting.formatNumber(_installment,2),
+                        _momentDate.add('months',1).format('MM/DD/YYYY'),
+                        accounting.formatNumber(_installment,4),
                         ""
                     ]
                 );
@@ -980,8 +981,8 @@ $(document).ready(function(){
             $('input[required]').each(function(){
                 if($(this).val()==""){
 
-                    $(this).focus()
-                        .tooltip('show');
+                    $(this).focus();
+                       // .tooltip('show');
 
                     PNotify.removeAll();
                     new PNotify({
@@ -994,6 +995,10 @@ $(document).ready(function(){
                     return false; //this will exit on function inside 'each'
                 }
             });
+
+            if(stat==0){
+                return 0;
+            }
 
             if($('input[name="receipt_no"]').val()!="" &&(parseFloat($('#txt_downpayment').val())==0 ||$('#txt_downpayment').val()=="")){
 
@@ -1009,6 +1014,12 @@ $(document).ready(function(){
                 stat=0;
                 return false;
             }
+
+            if(stat==0){
+                return 0;
+            }
+
+
             if(parseFloat($('#txt_downpayment').val())>0 && $('input[name="receipt_no"]').val()==""){
 
                 $('a[href="#tab-downpayment-info"]').click();
@@ -1024,8 +1035,14 @@ $(document).ready(function(){
                 return false;
             }
 
+            if(stat==0){
+                return 0;
+            }
+
             $('textarea[required]').each(function(){ //selectpicker does not support tooltip, just show notification
                 if($(this).val()==""){
+                    $(this).focus();
+
                     PNotify.removeAll();
                     new PNotify({
                         title: 'Missing!',
@@ -1037,6 +1054,10 @@ $(document).ready(function(){
                     return false; //this will exit on function inside 'each'
                 }
             });
+
+            if(stat==0){
+                return 0;
+            }
 
             var rowCount = dtItemCartModule.getItemCartInstance().rows()[0].length;
             var paymentSched = dtPaymentScheduleModule.getPaymentScheduleInstance().rows()[0].length;
@@ -1051,6 +1072,10 @@ $(document).ready(function(){
                 stat=0;
             }
 
+            if(stat==0){
+                return 0;
+            }
+
             if(paymentSched==0){ //if not item in cart
                 $('a[href="#create_payment_schedule"]').click();
 
@@ -1063,6 +1088,8 @@ $(document).ready(function(){
                 stat=0;
                 $('#txt_duration').focus();
             }
+
+
 
 
             return stat; //this will always be executed and return current state
@@ -1463,9 +1490,9 @@ $(document).ready(function(){
                     value.account_no,
                     value.receipt_no,
                     value.Description,
-                    accounting.formatNumber(value.Debit,2),
-                    accounting.formatNumber(value.Credit,2),
-                    accounting.formatNumber(value.Balance,2)
+                    accounting.formatNumber(value.Debit,4),
+                    accounting.formatNumber(value.Credit,4),
+                    accounting.formatNumber(value.Balance,4)
                 ]).draw();
             });
 
@@ -1488,11 +1515,11 @@ $(document).ready(function(){
                     value.account_no,
                     value.consumer_name,
                     accounting.formatNumber(value.ApprehendedAmount,2),
-                    accounting.formatNumber(value.TotalPayment,2),
-                    accounting.formatNumber(value.TotalBalance,2),
+                    accounting.formatNumber(value.TotalPayment,4),
+                    accounting.formatNumber(value.TotalBalance,4),
                     accounting.formatNumber(value.PaymentsMade,0),
                     accounting.formatNumber(value.DelayedMonths,0),
-                    accounting.formatNumber(value.PreviousBalance,2)
+                    accounting.formatNumber(value.PreviousBalance,4)
                 ]).draw();
             });
 

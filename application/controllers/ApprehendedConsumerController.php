@@ -40,6 +40,11 @@ class ApprehendedConsumerController extends CI_Controller {
         }
     }
 
+    function validateAccount(){
+
+    }
+
+
     function ActionUpdateApprehendedAccountInfo(){
         if($this->ApprehendedConsumerModel->UpdateApprehendAccount()){
             echo json_encode(

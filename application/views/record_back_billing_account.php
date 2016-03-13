@@ -463,26 +463,23 @@
                                     </form>
 
 									</div>
-										<br /><br />
-									<div class="row">
-											<div class="col-lg-12">
-												<div class="panel panel-default" style="padding:15px 10px 0px 10px;margin-top:-20px;">
-													<div class="form-group">																		
-														<div class="input-group">																			
-															<input type="text" id="plu_typehead" data-provide="typeahead" class="form-control" placeholder="Search Unit here"> 
-																<span class="input-group-btn">																				
-																<button type="button" class="btn btn-primary">Browse List</button>
-															</span>
-																					
-														</div>
-													</div>
-												</div>
-											</div>
-									</div>
+
+
 									
 
 									<div class="row">
 										<div class="col-lg-12">
+<br />
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <input type="text" id="plu_typehead" data-provide="typeahead" class="form-control" placeholder="Search Unit here">
+																<span class="input-group-btn">
+																<button type="button" class="btn btn-primary">Browse List</button>
+															</span>
+
+                                                </div>
+                                            </div>
+
 											<table id="tbl_item_cart" class="table table-bordered">
 																				<thead>
 																					<tr>																					
